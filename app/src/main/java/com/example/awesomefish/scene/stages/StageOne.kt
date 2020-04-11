@@ -41,8 +41,6 @@ class StageOne(context: Context) :
                 it.draw(canvas)
             }
         }
-
-        println("Size: ${FoodManager.size()}")
     }
 
     override fun backgroundColor(): Int {
