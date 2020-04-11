@@ -1,4 +1,4 @@
-package com.example.awesomefish.shared.foodmanager
+package com.example.awesomefish.shared
 
 import android.content.Context
 import com.example.awesomefish.entities.Food
@@ -20,9 +20,10 @@ object FoodManager {
         foodReservoir.push(food)
     }
 
-    fun removeFood(food: Food) {
-        foods.remove(food)
+    fun removeFood(food: Food): Boolean {
+        val removed = foods.remove(food)
         removeFromReservoir()
+        return removed
     }
 
     private fun removeFromReservoir() {
@@ -49,8 +50,14 @@ object FoodManager {
         for (index in 0 until size) {
             val food = Food(
                 context,
-                rand(foodStartX + offset++, foodEndX).toFloat(),
-                rand(foodStartY + offset++, foodEndY).toFloat()
+                rand(
+                    foodStartX + offset++,
+                    foodEndX
+                ).toFloat(),
+                rand(
+                    foodStartY + offset++,
+                    foodEndY
+                ).toFloat()
             )
 
             addFood(food)
@@ -61,8 +68,14 @@ object FoodManager {
         for (index in 0 until reserviorSize) {
             val food = Food(
                 context,
-                rand(foodStartX + reserVoirOffset++, reserviorFoodX).toFloat(),
-                rand(foodStartY + reserVoirOffset++, foodEndY).toFloat()
+                rand(
+                    foodStartX + reserVoirOffset++,
+                    reserviorFoodX
+                ).toFloat(),
+                rand(
+                    foodStartY + reserVoirOffset++,
+                    foodEndY
+                ).toFloat()
             )
 
             addToReservior(food)
