@@ -24,6 +24,10 @@ class SplashActivity : AppCompatActivity() {
                     MainActivity::class.java
                 )
             )
-        }, 5000)
+        }, SPLASH_WAIT_TIME)
+    }
+
+    companion object {
+        const val SPLASH_WAIT_TIME = 5000L
     }
 }
