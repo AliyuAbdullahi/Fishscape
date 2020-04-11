@@ -20,7 +20,10 @@ class MainActivity : AppCompatActivity() {
             override fun run() {
                 handler.post { launcher.invalidate() }
             }
-        }, 0, 30)
+        }, 0, LOOP_INTERVAL)
     }
 
+    companion object {
+        const val LOOP_INTERVAL = 30L
+    }
 }

@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import com.example.awesomefish.shared.foodmanager.rand
+import com.example.awesomefish.shared.rand
 
 const val MIN_Y = 200
 const val FOOD_SIZE = 30

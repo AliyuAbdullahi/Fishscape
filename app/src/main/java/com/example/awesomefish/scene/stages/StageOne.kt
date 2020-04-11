@@ -2,26 +2,40 @@ package com.example.awesomefish.scene.stages
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.Rect
 import android.view.MotionEvent
 import com.example.awesomefish.R
 import com.example.awesomefish.entities.Food
 import com.example.awesomefish.entities.Player
 import com.example.awesomefish.scene.Scene
-import com.example.awesomefish.shared.foodmanager.FoodManager
+import com.example.awesomefish.shared.FontManager
+import com.example.awesomefish.shared.FoodManager
 
 class StageOne(context: Context) :
     Scene(context) {
 
     private var player: Player = Player(context, 0F, 0F, 0F, 0F)
 
-    private val foods = FoodManager.createMuiltpleFood(context, 6, 12)
+    private val foods = FoodManager.createMuiltpleFood(context, FOOD_SIZE, FOOD_RESERVOIR_SIZE)
+
+    private var score = 0
+
+    private val scorePaint = Paint()
+
+    init {
+        scorePaint.isAntiAlias = true
+        scorePaint.color = Color.GREEN
+        scorePaint.typeface = FontManager.getTypeForFont(context, FontManager.Font.GLADIATOR_SPORT)
+        scorePaint.textSize = FontManager.FontSize.MEDIUM
+    }
 
     override fun display(canvas: Canvas) {
         super.display(canvas)
 
         FoodManager.foods.forEach {
-            it.foodStartPostion = (canvas.width + 50).toFloat()
+            it.foodStartPostion = (canvas.width + FOOD_X_OFFSET)
             it.maxY = canvas.height
         }
 
@@ -30,9 +44,13 @@ class StageOne(context: Context) :
         player.draw(canvas)
 
         for (index in 0 until FoodManager.size() - 1) {
-            println(FoodManager.foods[index])
             if (player.hasEatenFood(FoodManager.foods[index])) {
-                FoodManager.removeFood(FoodManager.foods[index])
+                val removed = FoodManager.removeFood(
+                    FoodManager.foods[index]
+                )
+                if (removed) {
+                    score += 5
+                }
             }
         }
 
@@ -41,6 +59,8 @@ class StageOne(context: Context) :
                 it.draw(canvas)
             }
         }
+
+        canvas.drawText("Score - $score", MIN_SCORE_X, MIN_SCORE_Y, scorePaint)
     }
 
     override fun backgroundColor(): Int {
@@ -51,8 +71,8 @@ class StageOne(context: Context) :
         return R.drawable.background
     }
 
-    override fun onTouch(event: MotionEvent): Boolean {
-        event.let {
+    override fun onTouch(motinEvent: MotionEvent): Boolean {
+        motinEvent.let {
             player.screenClicked = it.action == MotionEvent.ACTION_DOWN
             if (player.screenClicked) {
                 player.pushUp()
@@ -82,4 +102,13 @@ class StageOne(context: Context) :
             (food.foodY + food.foodHeight).toInt()
         )
     )
+
+    companion object {
+        const val MIN_SCORE_X = 10F
+        const val MIN_SCORE_Y = 80F
+        const val FOOD_X_OFFSET = 50F
+
+        const val FOOD_SIZE = 6
+        const val FOOD_RESERVOIR_SIZE = 12
+    }
 }
