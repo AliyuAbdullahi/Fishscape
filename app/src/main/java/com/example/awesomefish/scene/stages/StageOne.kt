@@ -12,8 +12,9 @@ import com.example.awesomefish.entities.Player
 import com.example.awesomefish.scene.Scene
 import com.example.awesomefish.shared.FontManager
 import com.example.awesomefish.shared.FoodManager
+import com.example.awesomefish.shared.SoundManager
 
-class StageOne(context: Context) :
+class StageOne(context: Context, val soundManager: SoundManager) :
     Scene(context) {
 
     private var player: Player = Player(context, 0F, 0F, 0F, 0F)
@@ -29,6 +30,7 @@ class StageOne(context: Context) :
         scorePaint.color = Color.GREEN
         scorePaint.typeface = FontManager.getTypeForFont(context, FontManager.Font.GLADIATOR_SPORT)
         scorePaint.textSize = FontManager.FontSize.MEDIUM
+//        soundManager.playShortSound(SoundManager.MENU_1, SoundManager.Loop.LOOP)
     }
 
     override fun display(canvas: Canvas) {
@@ -102,6 +104,11 @@ class StageOne(context: Context) :
             (food.foodY + food.foodHeight).toInt()
         )
     )
+
+    override fun onDestroy() {
+        soundManager.unload(SoundManager.MENU_1)
+        SoundManager.clear()
+    }
 
     companion object {
         const val MIN_SCORE_X = 10F
