@@ -7,10 +7,11 @@ import android.view.View
 import com.example.awesomefish.scene.Scene
 import com.example.awesomefish.scene.SceneManager
 import com.example.awesomefish.scene.stages.StageOne
+import com.example.awesomefish.shared.SoundManager
 
-class GameLauncher(context: Context) : View(context) {
+class GameLauncher(context: Context, soundManager: SoundManager) : View(context) {
 
-    private var stageOne: Scene = StageOne(context)
+    private var stageOne: Scene = StageOne(context, soundManager)
 
     init {
         SceneManager.addScene(stageOne)
@@ -33,5 +34,9 @@ class GameLauncher(context: Context) : View(context) {
 
     fun onResume() {
         SceneManager.get().onResume()
+    }
+
+    fun onDestroy() {
+        SceneManager.get().onDestroy()
     }
 }

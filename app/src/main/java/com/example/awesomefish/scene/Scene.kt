@@ -24,7 +24,10 @@ abstract class Scene(val context: Context) {
     abstract fun backgroundImage(): Int?
 
     abstract fun onPause()
+
     abstract fun onResume()
+
+    abstract fun onDestroy()
 
     abstract fun onTouch(motinEvent: MotionEvent): Boolean
 }

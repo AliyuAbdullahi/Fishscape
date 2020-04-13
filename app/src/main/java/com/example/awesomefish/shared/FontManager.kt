@@ -16,7 +16,8 @@ object FontManager {
         GLADIATOR_SPORT("fonts/GladiatorSport-O82O.ttf"),
         GLADIATOR_SPORT_BOLD("fonts/GladiatorSportBold-ZP4q.ttf"),
         GLADIATOR_SPORT_BOLD_ITALLICS("fonts/GladiatorSportBoldItalic-3BWX.ttf"),
-        GLADIATOR_SPORT_ITALLIC("fonts/GladiatorSportItalic-xgKj.ttf")
+        GLADIATOR_SPORT_ITALLIC("fonts/GladiatorSportItalic-xgKj.ttf"),
+        SQUIRK("fonts/Squirk-RMvV.ttf")
     }
 
     object FontSize {
