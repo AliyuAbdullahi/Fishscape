@@ -30,7 +30,6 @@ class StageOne(context: Context, val soundManager: SoundManager) :
         scorePaint.color = Color.GREEN
         scorePaint.typeface = FontManager.getTypeForFont(context, FontManager.Font.GLADIATOR_SPORT)
         scorePaint.textSize = FontManager.FontSize.MEDIUM
-//        soundManager.playShortSound(SoundManager.MENU_1, SoundManager.Loop.LOOP)
     }
 
     override fun display(canvas: Canvas) {

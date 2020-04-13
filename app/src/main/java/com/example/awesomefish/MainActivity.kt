@@ -37,6 +37,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val LOOP_INTERVAL = 30L
+        const val LOOP_INTERVAL = (1000/60).toLong()
     }
 }
