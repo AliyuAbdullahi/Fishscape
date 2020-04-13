@@ -21,6 +21,8 @@ class StageOne(context: Context, val soundManager: SoundManager) :
 
     private val foods = FoodManager.createMuiltpleFood(context, FOOD_SIZE, FOOD_RESERVOIR_SIZE)
 
+    val badFood = FoodManager.loadBadFood(context, 4)
+
     private var score = 0
 
     private val scorePaint = Paint()
@@ -36,6 +38,11 @@ class StageOne(context: Context, val soundManager: SoundManager) :
         super.display(canvas)
 
         FoodManager.foods.forEach {
+            it.foodStartPostion = (canvas.width + FOOD_X_OFFSET)
+            it.maxY = canvas.height
+        }
+
+        FoodManager.badFood.forEach {
             it.foodStartPostion = (canvas.width + FOOD_X_OFFSET)
             it.maxY = canvas.height
         }
@@ -59,7 +66,12 @@ class StageOne(context: Context, val soundManager: SoundManager) :
             FoodManager.foods.forEach {
                 it.draw(canvas)
             }
+
+            for (food in FoodManager.badFood) {
+                food.draw(canvas)
+            }
         }
+
 
         canvas.drawText("Score - $score", MIN_SCORE_X, MIN_SCORE_Y, scorePaint)
     }
