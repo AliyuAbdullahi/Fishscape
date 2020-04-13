@@ -1,13 +1,13 @@
-package com.example.awesomefish
+package com.example.awesomefish.scene.host
 
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import com.example.awesomefish.game.GameLauncher
+import com.example.awesomefish.start.GameLauncher
 import com.example.awesomefish.shared.SoundManager
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class GameHostActivity : AppCompatActivity() {
     private lateinit var launcher: GameLauncher
     private lateinit var soundManager: SoundManager
 
@@ -28,7 +28,9 @@ class MainActivity : AppCompatActivity() {
             override fun run() {
                 handler.post { launcher.invalidate() }
             }
-        }, 0, LOOP_INTERVAL)
+        }, 0,
+            LOOP_INTERVAL
+        )
     }
 
     override fun onDestroy() {

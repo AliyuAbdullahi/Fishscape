@@ -1,4 +1,4 @@
-package com.example.awesomefish
+package com.example.awesomefish.start
 
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
@@ -7,13 +7,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.awesomefish.R
+import com.example.awesomefish.scene.host.GameHostActivity
 import com.example.awesomefish.shared.AnimationManager
 import com.example.awesomefish.shared.FontManager
 import com.example.awesomefish.shared.LocalStorageManager
 import com.example.awesomefish.shared.SoundManager
 import kotlinx.android.synthetic.main.activity_splash.*
 
-class SplashActivity : AppCompatActivity() {
+class StartActivity : AppCompatActivity() {
 
     private lateinit var soundManager: SoundManager
 
@@ -41,7 +43,7 @@ class SplashActivity : AppCompatActivity() {
             ) {
                 AnimationManager.resetView(startGame)
                 soundManager.stopBackgroundSound()
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, GameHostActivity::class.java))
                 this.finish()
             }
             soundManager.playShortSound(
@@ -58,9 +60,16 @@ class SplashActivity : AppCompatActivity() {
 
     private fun applyAnimationOnView() {
         val translateY =
-            PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -FISH_TRANSLATION, FISH_TRANSLATION)
-        val rotate = PropertyValuesHolder.ofFloat(View.ROTATION_Y, FISH_ROTATION)
-        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA, TEXT_MIN_ALPHA, TEXT_MAX_ALPH)
+            PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -FISH_TRANSLATION,
+                FISH_TRANSLATION
+            )
+        val rotate = PropertyValuesHolder.ofFloat(View.ROTATION_Y,
+            FISH_ROTATION
+        )
+        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA,
+            TEXT_MIN_ALPHA,
+            TEXT_MAX_ALPH
+        )
         val properties = arrayOf(translateY, rotate)
         val startGameProperties = arrayOf(alpha)
         AnimationManager.applyAnimationsOn(
@@ -93,18 +102,22 @@ class SplashActivity : AppCompatActivity() {
     private fun setUpView() {
         resumeGame.visibility = if (LocalStorageManager.gameInProgress) View.VISIBLE else View.GONE
         startGame.text =
-            if (LocalStorageManager.gameInProgress) getString(R.string.resume_game) else getString(R.string.start_game)
+            if (LocalStorageManager.gameInProgress) getString(R.string.resume_game) else getString(
+                R.string.start_game
+            )
     }
 
     fun startGameScreen() {
         Handler().postDelayed({
             startActivity(
                 Intent(
-                    this@SplashActivity,
-                    MainActivity::class.java
+                    this@StartActivity,
+                    GameHostActivity::class.java
                 )
             )
-        }, SPLASH_WAIT_TIME)
+        },
+            SPLASH_WAIT_TIME
+        )
     }
 
     companion object {

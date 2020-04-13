@@ -1,4 +1,4 @@
-package com.example.awesomefish.game
+package com.example.awesomefish.start
 
 import android.content.Context
 import android.graphics.Canvas
