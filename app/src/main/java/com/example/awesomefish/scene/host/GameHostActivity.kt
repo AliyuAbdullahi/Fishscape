@@ -3,8 +3,9 @@ package com.example.awesomefish.scene.host
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import com.example.awesomefish.start.GameLauncher
+import com.example.awesomefish.menu.PauseMenu
 import com.example.awesomefish.shared.SoundManager
+import com.example.awesomefish.start.GameLauncher
 import java.util.*
 
 class GameHostActivity : AppCompatActivity() {
@@ -24,13 +25,22 @@ class GameHostActivity : AppCompatActivity() {
 
         val timer = Timer()
 
-        timer.schedule(object : TimerTask() {
-            override fun run() {
-                handler.post { launcher.invalidate() }
-            }
-        }, 0,
+        timer.schedule(
+            object : TimerTask() {
+                override fun run() {
+                    handler.post { launcher.invalidate() }
+                }
+            }, 0,
             LOOP_INTERVAL
         )
+    }
+
+    private fun showMenuDialog() {
+        PauseMenu.instance().show(supportFragmentManager, "pause_menu")
+    }
+
+    override fun onBackPressed() {
+        showMenuDialog()
     }
 
     override fun onDestroy() {
@@ -39,6 +49,6 @@ class GameHostActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val LOOP_INTERVAL = (1000/60).toLong()
+        const val LOOP_INTERVAL = (1000 / 60).toLong()
     }
 }
