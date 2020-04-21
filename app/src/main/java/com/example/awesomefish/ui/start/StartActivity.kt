@@ -1,4 +1,4 @@
-package com.example.awesomefish.start
+package com.example.awesomefish.ui.start
 
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
@@ -8,7 +8,7 @@ import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
-import com.example.awesomefish.scene.host.GameHostActivity
+import com.example.awesomefish.ui.stages.GameHostActivity
 import com.example.awesomefish.shared.AnimationManager
 import com.example.awesomefish.shared.FontManager
 import com.example.awesomefish.shared.LocalStorageManager

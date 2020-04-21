@@ -86,7 +86,7 @@ class SoundManager private constructor(val context: Context) {
     }
 
     fun resume() {
-        if (mediaPlayer != null) {
+        if (mediaPlayer != null && mediaPlayerReleased.not()) {
             mediaPlayer?.start()
         }
     }

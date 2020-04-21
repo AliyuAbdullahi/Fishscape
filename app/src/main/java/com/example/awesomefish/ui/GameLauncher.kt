@@ -1,4 +1,4 @@
-package com.example.awesomefish.start
+package com.example.awesomefish.ui
 
 import android.content.Context
 import android.graphics.Canvas
@@ -6,7 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import com.example.awesomefish.scene.Scene
 import com.example.awesomefish.scene.SceneManager
-import com.example.awesomefish.scene.stages.StageOne
+import com.example.awesomefish.ui.stages.StageOne
 import com.example.awesomefish.shared.SoundManager
 
 class GameLauncher(context: Context, soundManager: SoundManager) : View(context) {

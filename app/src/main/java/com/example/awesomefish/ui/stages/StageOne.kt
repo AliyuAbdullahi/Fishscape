@@ -1,4 +1,4 @@
-package com.example.awesomefish.scene.stages
+package com.example.awesomefish.ui.stages
 
 import android.content.Context
 import android.graphics.Canvas
@@ -30,7 +30,7 @@ class StageOne(context: Context, val soundManager: SoundManager) :
     init {
         scorePaint.isAntiAlias = true
         scorePaint.color = Color.GREEN
-        scorePaint.typeface = FontManager.getTypeForFont(context, FontManager.Font.GLADIATOR_SPORT)
+        scorePaint.typeface = FontManager.getTypeForFont(context, FontManager.Font.SQUIRK)
         scorePaint.textSize = FontManager.FontSize.MEDIUM
     }
 
@@ -53,6 +53,10 @@ class StageOne(context: Context, val soundManager: SoundManager) :
 
         for (index in 0 until FoodManager.size() - 1) {
             if (player.hasEatenFood(FoodManager.foods[index])) {
+                soundManager.playShortSound(
+                    SoundManager.ShortSound.CLICK,
+                    SoundManager.Loop.DONT_LOOP
+                )
                 val removed = FoodManager.removeFood(
                     FoodManager.foods[index]
                 )
