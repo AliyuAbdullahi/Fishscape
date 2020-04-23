@@ -18,5 +18,6 @@ data class GameData(
     val isInProgress: Boolean = false,
     val score: Int = 0,
     val foodOnScreen: List<Food> = listOf(),
-    val foodInReservoir: List<Food> = listOf()
+    val foodInReservoir: List<Food> = listOf(),
+    val lifeCount: Int = 0
 )

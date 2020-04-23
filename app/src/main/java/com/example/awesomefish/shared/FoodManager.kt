@@ -121,7 +121,7 @@ object FoodManager {
     fun take(size: Int) = foods.take(size)
 
     fun hasFood(): Boolean {
-        return foodSize > 1
+        return foodSize > 0
     }
 
     fun size() = foodSize

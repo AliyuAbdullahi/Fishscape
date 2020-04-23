@@ -37,7 +37,7 @@ class Food(
 
     var foodStartPostion = 0F
 
-    override fun update(): Pair<Float, Float> {
+    override fun update() {
 
         if (foodX < 0) {
             foodX = foodStartPostion
@@ -45,8 +45,6 @@ class Food(
         }
 
         foodX = foodX - speed
-
-        return Pair(foodX, foodY)
     }
 
     override fun updatePosition(x: Float, y: Float) {

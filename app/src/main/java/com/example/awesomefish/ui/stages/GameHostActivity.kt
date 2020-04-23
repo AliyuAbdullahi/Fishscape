@@ -23,6 +23,7 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
             soundManager.playLongTrack(SoundManager.BackgroundSound.WELCOME_SCREEN)
         }, 100)
         launcher = GameLauncher(this, soundManager)
+
         setContentView(launcher)
 
         val timer = Timer()
@@ -90,12 +91,14 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
         AlertDialog.Builder(this)
             .setTitle(R.string.quit_dialog_title)
             .setMessage(R.string.quit_dialog_message)
-            .setPositiveButton(getString(R.string.yes)
-        ) { _, _ ->
-            finish()
-        }.setNegativeButton(getString(R.string.no)
-        ) { _, _ ->
-            hideMenuDialog()
-        }.create().show()
+            .setPositiveButton(
+                getString(R.string.yes)
+            ) { _, _ ->
+                finish()
+            }.setNegativeButton(
+                getString(R.string.no)
+            ) { _, _ ->
+                hideMenuDialog()
+            }.create().show()
     }
 }
