@@ -1,27 +1,42 @@
 package com.example.awesomefish.entities
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.util.Log
 import com.example.awesomefish.R
 
-class Life(val lifeContext: Context, var lifeX: Float, var lifeY: Float) :
-    Entity(lifeContext, lifeX, lifeY) {
+class Life(
+    val lifeContext: Context, var lifeX: Float, var lifeY: Float,
+    var foodContainingScreenWidth: Float = 0.0F,
+    var foodContainingScreenHeight: Float = 0.0F
+) :
+    Entity(lifeContext, lifeX, lifeY, foodContainingScreenWidth, foodContainingScreenHeight) {
 
-    var active: Boolean = true
-
-    override fun update(): Pair<Float, Float> {
-        // Do nothing
-        return Pair(lifeX, lifeY)
+    override fun update() {
+        //Nothing here for now
     }
 
     override fun draw(canvas: Canvas) {
-
+        imageResource()?.let {
+            val bitmap = BitmapFactory.decodeResource(lifeContext.resources, it)
+            canvas.drawBitmap(bitmap, lifeX, lifeY, null)
+        }
     }
 
-    override fun updatePosition(x: Float, y: Float) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun width(): Int? =
+        imageResource()?.let { BitmapFactory.decodeResource(lifeContext.resources, it).width }
+
+    override fun updatePosition(x: Float, y: Float) {}
+
+    override fun imageResource(): Int? = R.drawable.hearts
+
+    fun printDebug() {
+        Log.d("LIFE", "x: $lifeX, y: $lifeY")
     }
 
-    override fun imageResource(): Int? = if (active) R.drawable.hearts else R.drawable.heart_grey
 
+    override fun toString(): String {
+        return "(Life=> x: $lifeX, y: $lifeY)"
+    }
 }

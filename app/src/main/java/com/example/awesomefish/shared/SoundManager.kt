@@ -86,7 +86,7 @@ class SoundManager private constructor(val context: Context) {
     }
 
     fun resume() {
-        if (mediaPlayer != null) {
+        if (mediaPlayer != null && mediaPlayerReleased.not()) {
             mediaPlayer?.start()
         }
     }
@@ -172,6 +172,7 @@ class SoundManager private constructor(val context: Context) {
     enum class ShortSound(@RawRes val resId: Int) {
         CLICK(R.raw.click),
         REVEAL_ONE(R.raw.reveal_one),
-        REVEAL_TWO(R.raw.reveal_2)
+        REVEAL_TWO(R.raw.reveal_2),
+        DAMAGE(R.raw.damage)
     }
 }

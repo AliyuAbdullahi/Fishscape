@@ -7,15 +7,17 @@ import android.graphics.Paint
 import com.example.awesomefish.shared.rand
 
 const val MIN_Y = 200
-const val FOOD_SIZE = 30
+const val FOOD_RADIUS = 30F
+const val POISONOUS_FOOD_SIZE = 80F
 
 class Food(
     context: Context,
+    val type: Type,
     var foodX: Float,
     var foodY: Float,
     var maxY: Int = 0,
-    val foodWidth: Float = FOOD_SIZE.toFloat(),
-    val foodHeight: Float = FOOD_SIZE.toFloat()
+    val foodWidth: Float = FOOD_RADIUS,
+    val foodHeight: Float = FOOD_RADIUS
 ) :
     Entity(context, foodX, foodY, 0F, 0F, foodWidth, foodHeight) {
     private val paint = Paint()
@@ -23,15 +25,19 @@ class Food(
     private var prevY = foodY
 
     init {
-        paint.color = Color.YELLOW
+        if (type == Type.EDIBLE) {
+            paint.color = Color.YELLOW
+        } else {
+            paint.color = Color.RED
+        }
         paint.isAntiAlias = true
     }
 
-    var speed = 15
+    var speed = if (type == Type.EDIBLE) 16 else 18
 
     var foodStartPostion = 0F
 
-    override fun update(): Pair<Float, Float> {
+    override fun update() {
 
         if (foodX < 0) {
             foodX = foodStartPostion
@@ -39,8 +45,6 @@ class Food(
         }
 
         foodX = foodX - speed
-
-        return Pair(foodX, foodY)
     }
 
     override fun updatePosition(x: Float, y: Float) {
@@ -50,7 +54,7 @@ class Food(
 
     override fun draw(canvas: Canvas) {
         update()
-        canvas.drawCircle(foodX, foodY, FOOD_SIZE.toFloat(), paint)
+        canvas.drawCircle(foodX, foodY, FOOD_RADIUS, paint)
     }
 
     override fun imageResource(): Int? {
@@ -58,4 +62,7 @@ class Food(
         return null
     }
 
+    enum class Type {
+        EDIBLE, POISON
+    }
 }

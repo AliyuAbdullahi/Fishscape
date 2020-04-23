@@ -16,7 +16,7 @@ abstract class Entity(
 
     abstract fun draw(canvas: Canvas)
 
-    abstract fun update(): Pair<Float, Float>
+    abstract fun update()
 
     abstract fun updatePosition(x: Float, y: Float)
 

@@ -1,4 +1,4 @@
-package com.example.awesomefish.scene.stages
+package com.example.awesomefish.ui.stages
 
 import android.content.Context
 import android.graphics.Canvas
@@ -12,6 +12,7 @@ import com.example.awesomefish.entities.Player
 import com.example.awesomefish.scene.Scene
 import com.example.awesomefish.shared.FontManager
 import com.example.awesomefish.shared.FoodManager
+import com.example.awesomefish.shared.LifeFactory
 import com.example.awesomefish.shared.SoundManager
 
 class StageOne(context: Context, val soundManager: SoundManager) :
@@ -21,6 +22,8 @@ class StageOne(context: Context, val soundManager: SoundManager) :
 
     private val foods = FoodManager.createMuiltpleFood(context, FOOD_SIZE, FOOD_RESERVOIR_SIZE)
 
+    val badFood = FoodManager.loadBadFood(context, 4)
+
     private var score = 0
 
     private val scorePaint = Paint()
@@ -28,24 +31,49 @@ class StageOne(context: Context, val soundManager: SoundManager) :
     init {
         scorePaint.isAntiAlias = true
         scorePaint.color = Color.GREEN
-        scorePaint.typeface = FontManager.getTypeForFont(context, FontManager.Font.GLADIATOR_SPORT)
+        scorePaint.typeface = FontManager.getTypeForFont(context, FontManager.Font.SQUIRK)
         scorePaint.textSize = FontManager.FontSize.MEDIUM
     }
 
     override fun display(canvas: Canvas) {
         super.display(canvas)
 
-        FoodManager.foods.forEach {
-            it.foodStartPostion = (canvas.width + FOOD_X_OFFSET)
-            it.maxY = canvas.height
-        }
+        when {
+            player.isDead() -> {
+                //send game over event
+            }
+            else -> {
 
+                setFoodPosition(canvas)
+
+                drawPlayer(canvas)
+
+                drawFood(canvas)
+
+                drawScore(canvas)
+
+                drawLife(canvas)
+            }
+        }
+    }
+
+    private fun drawScore(canvas: Canvas) {
+        canvas.drawText("Score - $score", MIN_SCORE_X, MIN_SCORE_Y, scorePaint)
+    }
+
+    var badFoodCount = 0
+    private fun drawPlayer(canvas: Canvas) {
         player.maxX = canvas.width.toFloat()
         player.maxY = canvas.height.toFloat()
+
         player.draw(canvas)
 
-        for (index in 0 until FoodManager.size() - 1) {
+        for (index in 0 until FoodManager.size()) {
             if (player.hasEatenFood(FoodManager.foods[index])) {
+                soundManager.playShortSound(
+                    SoundManager.ShortSound.CLICK,
+                    SoundManager.Loop.DONT_LOOP
+                )
                 val removed = FoodManager.removeFood(
                     FoodManager.foods[index]
                 )
@@ -55,13 +83,57 @@ class StageOne(context: Context, val soundManager: SoundManager) :
             }
         }
 
+        for (index in 0 until FoodManager.badFood.size) {
+            val badFood = FoodManager.badFood[index]
+
+            if (player.hasEatenFood(badFood)) {
+                badFood.foodX = canvas.width + badFood.foodWidth
+
+                soundManager.playShortSound(
+                    SoundManager.ShortSound.DAMAGE,
+                    SoundManager.Loop.DONT_LOOP
+                )
+
+                player.reduceLife(1)
+
+                println("eaten bad food ${badFoodCount++}")
+            }
+        }
+    }
+
+    private fun drawFood(canvas: Canvas) {
         if (FoodManager.hasFood()) {
             FoodManager.foods.forEach {
                 it.draw(canvas)
             }
+
+            for (food in FoodManager.badFood) {
+                food.draw(canvas)
+            }
+        }
+    }
+
+    private fun drawLife(canvas: Canvas) {
+        if (player.life > 0) {
+            val lives = LifeFactory.produceLife(context, player.life, canvas.width)
+            if (lives.isNotEmpty()) {
+                lives.forEach {
+                    it.draw(canvas)
+                }
+            }
+        }
+    }
+
+    private fun setFoodPosition(canvas: Canvas) {
+        FoodManager.foods.forEach {
+            it.foodStartPostion = (canvas.width + FOOD_X_OFFSET)
+            it.maxY = canvas.height
         }
 
-        canvas.drawText("Score - $score", MIN_SCORE_X, MIN_SCORE_Y, scorePaint)
+        FoodManager.badFood.forEach {
+            it.foodStartPostion = (canvas.width + FOOD_X_OFFSET)
+            it.maxY = canvas.height
+        }
     }
 
     override fun backgroundColor(): Int {

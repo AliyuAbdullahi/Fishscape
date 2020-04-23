@@ -6,14 +6,44 @@ import java.util.*
 import kotlin.random.Random
 
 object FoodManager {
+
     val foods = mutableListOf<Food>()
     private val foodReservoir = Stack<Food>()
+
+    val badFood = mutableListOf<Food>()
 
     var foodSize = 0
 
     private fun addFood(food: Food) {
-        foods.add(food)
-        foodSize++
+        if (food.type == Food.Type.EDIBLE) {
+            foods.add(food)
+            foodSize++
+        }
+    }
+
+    fun loadBadFood(context: Context, range: Int = 2): MutableList<Food> {
+        val foodStartX = 1200
+        val foodEndX = 1900
+        val foodStartY = 300
+        val foodEndY = 920
+        var offset = 300
+        for (i in 1..range) {
+            badFood.add(
+                Food(
+                    context, Food.Type.POISON,
+                    rand(
+                        foodStartX + offset++,
+                        foodEndX
+                    ).toFloat(),
+                    rand(
+                        foodStartY + offset++,
+                        foodEndY
+                    ).toFloat()
+                )
+            )
+        }
+
+        return badFood
     }
 
     private fun addToReservior(food: Food) {
@@ -39,7 +69,11 @@ object FoodManager {
         food.forEach { addFood(it) }
     }
 
-    fun createMuiltpleFood(context: Context, size: Int, reserviorSize: Int = size) {
+    fun createMuiltpleFood(
+        context: Context,
+        size: Int,
+        reserviorSize: Int = size
+    ) {
         val foodStartX = 600
         val foodEndX = 900
         val foodStartY = 200
@@ -50,6 +84,7 @@ object FoodManager {
         for (index in 0 until size) {
             val food = Food(
                 context,
+                Food.Type.EDIBLE,
                 rand(
                     foodStartX + offset++,
                     foodEndX
@@ -68,6 +103,7 @@ object FoodManager {
         for (index in 0 until reserviorSize) {
             val food = Food(
                 context,
+                Food.Type.EDIBLE,
                 rand(
                     foodStartX + reserVoirOffset++,
                     reserviorFoodX
@@ -85,7 +121,7 @@ object FoodManager {
     fun take(size: Int) = foods.take(size)
 
     fun hasFood(): Boolean {
-        return foodSize > 1
+        return foodSize > 0
     }
 
     fun size() = foodSize
