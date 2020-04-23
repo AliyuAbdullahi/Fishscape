@@ -26,7 +26,33 @@ class StageOne(context: Context, val soundManager: SoundManager) :
 
     private var score = 0
 
+    private var gameRunning: Boolean = true
+
     private val scorePaint = Paint()
+
+    override fun isRunning() = gameRunning
+
+    override fun stopRunning() {
+        gameRunning = false
+    }
+
+    override fun startRunning() {
+        gameRunning = true
+    }
+
+    override fun update() {
+        player.update()
+
+        if (FoodManager.hasFood()) {
+            FoodManager.foods.forEach {
+                it.update()
+            }
+
+            for (food in FoodManager.badFood) {
+                food.update()
+            }
+        }
+    }
 
     init {
         scorePaint.isAntiAlias = true
@@ -37,21 +63,16 @@ class StageOne(context: Context, val soundManager: SoundManager) :
 
     override fun display(canvas: Canvas) {
         super.display(canvas)
-
         when {
             player.isDead() -> {
                 //send game over event
             }
             else -> {
-
                 setFoodPosition(canvas)
-
                 drawPlayer(canvas)
-
+                checkForCollision(canvas)
                 drawFood(canvas)
-
                 drawScore(canvas)
-
                 drawLife(canvas)
             }
         }
@@ -67,7 +88,9 @@ class StageOne(context: Context, val soundManager: SoundManager) :
         player.maxY = canvas.height.toFloat()
 
         player.draw(canvas)
+    }
 
+    private fun checkForCollision(canvas: Canvas) {
         for (index in 0 until FoodManager.size()) {
             if (player.hasEatenFood(FoodManager.foods[index])) {
                 soundManager.playShortSound(
@@ -155,11 +178,11 @@ class StageOne(context: Context, val soundManager: SoundManager) :
     }
 
     override fun onPause() {
-        //save data here
+        gameRunning = false
     }
 
     override fun onResume() {
-        // Restore data here
+        gameRunning = true
     }
 
     private fun Player.hasEatenFood(food: Food): Boolean = Rect(

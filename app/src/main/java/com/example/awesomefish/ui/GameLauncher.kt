@@ -8,10 +8,6 @@ import com.example.awesomefish.scene.Scene
 import com.example.awesomefish.scene.SceneManager
 import com.example.awesomefish.shared.SoundManager
 import com.example.awesomefish.ui.stages.StageOne
-import java.time.Clock
-import java.time.Clock.tick
-import java.time.Duration
-
 
 class GameLauncher(context: Context, soundManager: SoundManager) : View(context) {
 
@@ -25,6 +21,9 @@ class GameLauncher(context: Context, soundManager: SoundManager) : View(context)
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+        if (SceneManager.get().isRunning()) {
+            SceneManager.get().update()
+        }
         canvas?.let { theCanvas ->
             SceneManager.get().display(theCanvas)
         }

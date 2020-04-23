@@ -67,7 +67,6 @@ class Player(
     fun isDead() = playerDead == true
 
     override fun draw(canvas: Canvas) {
-        update()
         checkClickedAndDraw(playerContext, canvas)
         playerWidth = playerImage.width.toFloat()
         playerHeight = playerImage.height.toFloat()

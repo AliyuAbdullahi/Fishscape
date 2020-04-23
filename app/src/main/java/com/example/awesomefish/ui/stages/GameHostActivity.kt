@@ -59,6 +59,7 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     }
 
     override fun onBackPressed() {
+        launcher.onPause()
         showMenuDialog()
     }
 

@@ -53,7 +53,7 @@ class Food(
     }
 
     override fun draw(canvas: Canvas) {
-        update()
+//        update()
         canvas.drawCircle(foodX, foodY, FOOD_RADIUS, paint)
     }
 
