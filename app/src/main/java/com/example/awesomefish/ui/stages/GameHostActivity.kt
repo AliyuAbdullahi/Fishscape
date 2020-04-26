@@ -2,13 +2,11 @@ package com.example.awesomefish.ui.stages
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
 import com.example.awesomefish.menu.PauseMenu
 import com.example.awesomefish.scene.GameOverScene
-import com.example.awesomefish.scene.SceneManager
 import com.example.awesomefish.shared.SoundManager
 import com.example.awesomefish.ui.GameLauncher
 import java.util.*
@@ -109,10 +107,10 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     }
 
     override fun newGameClicked() {
-        Log.d("NEW GAME", "GAME OVER CLICKED")
+        GameLauncher.addScene(StageOne(this, soundManager))
     }
 
     override fun quitGameClicked() {
-        Log.d("QUIT GAME CLICKED", "GAME OVER CLICKED")
+        showQuitDialog()
     }
 }

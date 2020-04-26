@@ -64,8 +64,8 @@ class PauseMenu : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.getWindow()?.requestFeature(Window.FEATURE_NO_TITLE);
-        return dialog;
+        dialog.getWindow()?.requestFeature(Window.FEATURE_NO_TITLE)
+        return dialog
     }
 
     companion object {
