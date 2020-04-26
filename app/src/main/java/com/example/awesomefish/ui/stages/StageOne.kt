@@ -9,11 +9,13 @@ import android.view.MotionEvent
 import com.example.awesomefish.R
 import com.example.awesomefish.entities.Food
 import com.example.awesomefish.entities.Player
+import com.example.awesomefish.scene.GameOverScene
 import com.example.awesomefish.scene.Scene
 import com.example.awesomefish.shared.FontManager
 import com.example.awesomefish.shared.FoodManager
 import com.example.awesomefish.shared.LifeFactory
 import com.example.awesomefish.shared.SoundManager
+import com.example.awesomefish.ui.GameLauncher
 
 class StageOne(context: Context, val soundManager: SoundManager) :
     Scene(context) {
@@ -65,7 +67,7 @@ class StageOne(context: Context, val soundManager: SoundManager) :
         super.display(canvas)
         when {
             player.isDead() -> {
-                //send game over event
+                GameLauncher.addScene(GameOverScene(context))
             }
             else -> {
                 setFoodPosition(canvas)
@@ -167,8 +169,8 @@ class StageOne(context: Context, val soundManager: SoundManager) :
         return R.drawable.background
     }
 
-    override fun onTouch(motinEvent: MotionEvent): Boolean {
-        motinEvent.let {
+    override fun onTouch(motionEvent: MotionEvent): Boolean {
+        motionEvent.let {
             player.screenClicked = it.action == MotionEvent.ACTION_DOWN
             if (player.screenClicked) {
                 player.pushUp()
