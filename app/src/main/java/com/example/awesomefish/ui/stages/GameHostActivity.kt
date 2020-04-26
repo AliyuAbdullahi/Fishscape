@@ -5,6 +5,7 @@ import android.os.Handler
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
+import com.example.awesomefish.menu.PAUSE_MENU_TAG
 import com.example.awesomefish.menu.PauseMenu
 import com.example.awesomefish.scene.GameOverScene
 import com.example.awesomefish.shared.SoundManager
@@ -57,8 +58,13 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     }
 
     private fun hideMenuDialog() {
-        soundManager.playShortSound(SoundManager.ShortSound.REVEAL_TWO, SoundManager.Loop.DONT_LOOP)
-        PauseMenu.hide(supportFragmentManager)
+        if (supportFragmentManager.findFragmentByTag(PAUSE_MENU_TAG) != null) {
+            soundManager.playShortSound(
+                SoundManager.ShortSound.REVEAL_TWO,
+                SoundManager.Loop.DONT_LOOP
+            )
+            PauseMenu.hide(supportFragmentManager)
+        }
     }
 
     override fun onBackPressed() {
