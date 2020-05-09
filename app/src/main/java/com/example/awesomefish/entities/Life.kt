@@ -7,9 +7,9 @@ import android.util.Log
 import com.example.awesomefish.R
 
 class Life(
-    val lifeContext: Context, var lifeX: Float, var lifeY: Float,
-    var foodContainingScreenWidth: Float = 0.0F,
-    var foodContainingScreenHeight: Float = 0.0F
+    private val lifeContext: Context, var lifeX: Float, var lifeY: Float,
+    foodContainingScreenWidth: Float = 0.0F,
+    foodContainingScreenHeight: Float = 0.0F
 ) :
     Entity(lifeContext, lifeX, lifeY, foodContainingScreenWidth, foodContainingScreenHeight) {
 
@@ -34,7 +34,6 @@ class Life(
     fun printDebug() {
         Log.d("LIFE", "x: $lifeX, y: $lifeY")
     }
-
 
     override fun toString(): String {
         return "(Life=> x: $lifeX, y: $lifeY)"
