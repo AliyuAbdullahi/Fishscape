@@ -9,20 +9,32 @@ object Console {
      * @param textColor is either [White, Purple or Green] these are the colors supported for simple
      * message logging. The default is white
      */
-    fun log(message: String, textColor: TextColor = TextColor.White) {
-        val supportedLogColors = listOf(TextColor.White, TextColor.Purple, TextColor.Green)
-        if (textColor in supportedLogColors) {
-            println("${textColor.color}$message$RESET")
+    fun log(
+        message: String,
+        tag: String = "DATA",
+        inTestEnvironment: Boolean = false,
+        textColor: TextColor = TextColor.White
+    ) {
+        if (inTestEnvironment.not()) {
+            Log.d(tag, message)
         } else {
-            println("${ColorText.WHITE}$message$RESET")
+            val supportedLogColors = listOf(TextColor.White, TextColor.Purple, TextColor.Green)
+            if (textColor in supportedLogColors) {
+                println("${textColor.color}$tag: $message$RESET")
+            } else {
+                println("${ColorText.WHITE}$tag: $message$RESET")
+            }
         }
     }
 
     /**
      * @param message is the text to be displayed on console. The text color is Yellow
      */
-    fun warn(message: String) {
-        println("${ColorText.YELLOW}$message$RESET")
+    fun warn(message: String, tag: String = "DATA", inTestEnvironment: Boolean = false) {
+        if (inTestEnvironment.not()) {
+            Log.w(tag, message)
+        }
+        println("${ColorText.YELLOW}$tag: $message$RESET")
     }
 
     /**
@@ -34,11 +46,12 @@ object Console {
         if (inTestEnvironment) {
             println("${ColorText.RED}$message$RESET")
         } else {
-            Log.e("", message)
+            Log.e("ERROR", message)
         }
     }
 
     /**
+     * Note: [emphasis] only work in ordinary terminal and not android optimized Logcat
      * @param message is the message to be logged
      * @param backgroundColor is the text background color to provide emphasis
      * @param textColor is the message text color

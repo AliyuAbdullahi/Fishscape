@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import com.example.awesomefish.R
+import com.example.awesomefish.shared.Console
 
 const val MIN_PLAYER_Y = 50F
 const val MAX_PLAYER_Y_OFFSET = 200
@@ -40,6 +41,7 @@ class Player(
             if (lifeCount <= 0) {
                 return
             }
+            printDebug()
             playerY = playerY + speed
 
             if (playerY >= (maxY - MAX_PLAYER_Y_OFFSET)) {
@@ -80,11 +82,11 @@ class Player(
             playerImage = BitmapFactory.decodeResource(context.resources, R.drawable.fish2)
             if (screenClicked) {
                 canvas.drawBitmap(playerImage, playerX, playerY, null)
+                Console.warn("Loaded... $playerX , $playerY ")
                 screenClicked = false
             } else {
                 imageResource()?.let { image ->
                     playerImage = BitmapFactory.decodeResource(context.resources, image)
-                    println("Loaded... $playerX , $playerY ")
                     canvas.drawBitmap(playerImage, playerX, playerY, null)
                 }
             }
@@ -92,7 +94,7 @@ class Player(
     }
 
     override fun updatePosition(x: Float, y: Float) {
-      //will be refactored. Entity position should be updated here
+        //will be refactored. Entity position should be updated here
     }
 
     fun pushUp() {
@@ -102,7 +104,7 @@ class Player(
     override fun imageResource(): Int? = R.drawable.fish1
 
     fun printDebug() {
-        println("X: ${this.playerX}, Y: ${this.playerY}, width: ${this.playerWidth}, height: ${this.playerHeight}")
+        Console.log("X: ${this.playerX}, Y: ${this.playerY}, width: ${this.playerWidth}, height: ${this.playerHeight}", Console.TextColor.Purple)
     }
 
     companion object {
