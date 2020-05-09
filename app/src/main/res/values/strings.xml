@@ -10,4 +10,7 @@
     <string name="no">No</string>
     <string name="quit_dialog_title">Quit Game</string>
     <string name="quit_dialog_message">Do you want to quit game?</string>
+    <string name="game_over">Game Over</string>
+    <string name="new_game">New Game</string>
+    <string name="quit_game">Quit Game</string>
 </resources>

@@ -5,12 +5,16 @@ import android.os.Handler
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
+import com.example.awesomefish.menu.PAUSE_MENU_TAG
 import com.example.awesomefish.menu.PauseMenu
+import com.example.awesomefish.scene.GameOverScene
+import com.example.awesomefish.shared.FoodManager
 import com.example.awesomefish.shared.SoundManager
 import com.example.awesomefish.ui.GameLauncher
 import java.util.*
 
-class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedListener {
+class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedListener,
+    GameOverScene.GameOverClickListener {
     private lateinit var launcher: GameLauncher
     private lateinit var soundManager: SoundManager
 
@@ -46,6 +50,7 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     override fun onResume() {
         super.onResume()
         soundManager.resume()
+        launcher.onResume()
     }
 
     private fun showMenuDialog() {
@@ -54,21 +59,23 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     }
 
     private fun hideMenuDialog() {
-        soundManager.playShortSound(SoundManager.ShortSound.REVEAL_TWO, SoundManager.Loop.DONT_LOOP)
-        PauseMenu.hide(supportFragmentManager)
+        if (supportFragmentManager.findFragmentByTag(PAUSE_MENU_TAG) != null) {
+            soundManager.playShortSound(
+                SoundManager.ShortSound.REVEAL_TWO,
+                SoundManager.Loop.DONT_LOOP
+            )
+            PauseMenu.hide(supportFragmentManager)
+        }
     }
 
     override fun onBackPressed() {
+        launcher.onPause()
         showMenuDialog()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         launcher.onDestroy()
-    }
-
-    companion object {
-        const val LOOP_INTERVAL = (1000 / 60).toLong()
     }
 
     override fun resumeClicked() {
@@ -101,4 +108,18 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
                 hideMenuDialog()
             }.create().show()
     }
+
+    override fun newGameClicked() {
+        FoodManager.clearAll()
+        GameLauncher.addScene(GameScene(this, soundManager))
+    }
+
+    override fun quitGameClicked() {
+        showQuitDialog()
+    }
+
+    companion object {
+        const val LOOP_INTERVAL = (1000 / 60).toLong()
+    }
+
 }

@@ -14,6 +14,8 @@ import com.example.awesomefish.R
 import com.example.awesomefish.shared.FontManager
 import kotlinx.android.synthetic.main.pause_menu.*
 
+const val PAUSE_MENU_TAG = "pause_menu"
+
 class PauseMenu : DialogFragment() {
 
     private lateinit var pauseMenuItemClickedListener: PauseMenuItemClickedListener
@@ -62,8 +64,8 @@ class PauseMenu : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.getWindow()?.requestFeature(Window.FEATURE_NO_TITLE);
-        return dialog;
+        dialog.getWindow()?.requestFeature(Window.FEATURE_NO_TITLE)
+        return dialog
     }
 
     companion object {
@@ -87,11 +89,11 @@ class PauseMenu : DialogFragment() {
         }
 
         fun show(fragmentManager: FragmentManager) {
-            instance().show(fragmentManager, "pause_menu")
+            instance().show(fragmentManager, PAUSE_MENU_TAG)
         }
 
         fun hide(fragmentManager: FragmentManager) {
-            (fragmentManager.findFragmentByTag("pause_menu") as PauseMenu).dismiss()
+            (fragmentManager.findFragmentByTag(PAUSE_MENU_TAG) as PauseMenu).dismiss()
         }
     }
 

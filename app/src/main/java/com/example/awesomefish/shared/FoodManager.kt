@@ -21,7 +21,11 @@ object FoodManager {
         }
     }
 
-    fun loadBadFood(context: Context, range: Int = 2): MutableList<Food> {
+    fun loadBadFood(context: Context, range: Int = 2): MutableList<Food> = synchronized(this) {
+        if (badFood.isNotEmpty()) {
+            badFood.clear()
+        }
+
         val foodStartX = 1200
         val foodEndX = 1900
         val foodStartY = 300
@@ -65,7 +69,7 @@ object FoodManager {
         }
     }
 
-    fun addFoods(vararg food: Food) {
+    fun addFoods(vararg food: Food) = synchronized(this) {
         food.forEach { addFood(it) }
     }
 
@@ -73,7 +77,8 @@ object FoodManager {
         context: Context,
         size: Int,
         reserviorSize: Int = size
-    ) {
+    ) = synchronized(this) {
+        clearAll()
         val foodStartX = 600
         val foodEndX = 900
         val foodStartY = 200
@@ -125,6 +130,12 @@ object FoodManager {
     }
 
     fun size() = foodSize
+
+    fun clearAll() = synchronized(this) {
+        foodSize = 0
+        foods.clear()
+        badFood.clear()
+    }
 }
 
 fun rand(s: Int, e: Int) = Random.nextInt(s, e + 1)
