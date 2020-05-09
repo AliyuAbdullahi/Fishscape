@@ -11,7 +11,7 @@ const val MAX_PLAYER_Y_OFFSET = 200
 const val MAX_POSSIBLE_LIFE = 6
 
 class Player(
-    var playerContext: Context,
+    private var playerContext: Context,
     var playerX: Float,
     var playerY: Float = Float.MIN_VALUE,
     var maxX: Float,
@@ -22,12 +22,13 @@ class Player(
 
     var screenClicked = false
 
-    var speed = 15
+    var speed = PLAYER_SPEED
 
-    private var playerDead = false
+    private val playerDead
+        get() = lifeCount == 0
 
     //This will change when we implement pause and resume and will be loaded from game data
-    private var lifeCount = 3
+    private var lifeCount = LIFE_COUNT
 
     val life: Int
         get() = lifeCount
@@ -37,7 +38,7 @@ class Player(
     override fun update() {
         if (playerDead.not()) {
             if (lifeCount <= 0) {
-                playerDead = true
+                return
             }
             playerY = playerY + speed
 
@@ -49,13 +50,15 @@ class Player(
                 playerY = MIN_PLAYER_Y
             }
 
-            speed += 5
+            speed += SPEED_INCREMENT_VALUE
         }
     }
 
     fun reduceLife(count: Int) {
-        if (lifeCount > 0) {
+        if (lifeCount > 0 && lifeCount >= count) {
             lifeCount -= count
+        } else {
+            lifeCount = 0
         }
     }
 
@@ -88,15 +91,24 @@ class Player(
         }
     }
 
-    override fun updatePosition(x: Float, y: Float) {}
+    override fun updatePosition(x: Float, y: Float) {
+      //will be refactored. Entity position should be updated here
+    }
 
     fun pushUp() {
-        speed = -25
+        speed = -BUMP_VALUE
     }
 
     override fun imageResource(): Int? = R.drawable.fish1
 
     fun printDebug() {
         println("X: ${this.playerX}, Y: ${this.playerY}, width: ${this.playerWidth}, height: ${this.playerHeight}")
+    }
+
+    companion object {
+        private const val PLAYER_SPEED = 15
+        private const val LIFE_COUNT = 3
+        private const val BUMP_VALUE = 25
+        private const val SPEED_INCREMENT_VALUE = 5
     }
 }

@@ -1,20 +1,9 @@
-package com.example.awesomefish.shared
+package com.example.awesomefish.data
 
 import com.example.awesomefish.entities.Food
 
-object LocalStorageManager {
-    var gameInProgress = false
-
-    fun storeGameData() {
-
-    }
-
-    fun retrieveGameData(): GameData {
-        return GameData()
-    }
-}
-
 data class GameData(
+    val level: GameLevel = GameLevel.LevelOne(),
     val isInProgress: Boolean = false,
     val score: Int = 0,
     val foodOnScreen: List<Food> = listOf(),

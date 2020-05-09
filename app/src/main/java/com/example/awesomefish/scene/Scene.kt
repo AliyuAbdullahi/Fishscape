@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.view.MotionEvent
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import com.example.awesomefish.data.GameLevel
 
 abstract class Scene(val context: Context) {
 
@@ -38,4 +39,6 @@ abstract class Scene(val context: Context) {
     abstract fun onTouch(motionEvent: MotionEvent): Boolean
     abstract fun stopRunning()
     abstract fun startRunning()
+
+    open fun setLevel(level: GameLevel) {}
 }

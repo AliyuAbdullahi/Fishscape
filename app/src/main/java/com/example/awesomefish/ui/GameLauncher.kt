@@ -2,14 +2,12 @@ package com.example.awesomefish.ui
 
 import android.content.Context
 import android.graphics.Canvas
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import com.example.awesomefish.scene.GameOverScene
 import com.example.awesomefish.scene.Scene
 import com.example.awesomefish.scene.SceneManager
 import com.example.awesomefish.shared.SoundManager
-import com.example.awesomefish.ui.stages.StageOne
+import com.example.awesomefish.ui.stages.GameScene
 
 class GameLauncher(context: Context, soundManager: SoundManager) : View(context){
 
@@ -17,7 +15,7 @@ class GameLauncher(context: Context, soundManager: SoundManager) : View(context)
 
     init {
         //This is a temp for now, eventually, we would load appropriate scene from stored progress
-        SceneManager.addScene(StageOne(context, soundManager))
+        SceneManager.addScene(GameScene(context, soundManager))
     }
 
     override fun onDraw(canvas: Canvas?) {

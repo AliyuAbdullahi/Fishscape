@@ -8,6 +8,7 @@ import com.example.awesomefish.R
 import com.example.awesomefish.menu.PAUSE_MENU_TAG
 import com.example.awesomefish.menu.PauseMenu
 import com.example.awesomefish.scene.GameOverScene
+import com.example.awesomefish.shared.FoodManager
 import com.example.awesomefish.shared.SoundManager
 import com.example.awesomefish.ui.GameLauncher
 import java.util.*
@@ -77,10 +78,6 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
         launcher.onDestroy()
     }
 
-    companion object {
-        const val LOOP_INTERVAL = (1000 / 60).toLong()
-    }
-
     override fun resumeClicked() {
         hideMenuDialog()
     }
@@ -113,10 +110,16 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     }
 
     override fun newGameClicked() {
-        GameLauncher.addScene(StageOne(this, soundManager))
+        FoodManager.clearAll()
+        GameLauncher.addScene(GameScene(this, soundManager))
     }
 
     override fun quitGameClicked() {
         showQuitDialog()
     }
+
+    companion object {
+        const val LOOP_INTERVAL = (1000 / 60).toLong()
+    }
+
 }

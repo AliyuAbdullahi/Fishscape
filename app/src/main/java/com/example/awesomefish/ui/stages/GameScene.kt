@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.MotionEvent
 import com.example.awesomefish.R
+import com.example.awesomefish.data.GameLevel
 import com.example.awesomefish.entities.Food
 import com.example.awesomefish.entities.Player
 import com.example.awesomefish.scene.GameOverScene
@@ -17,14 +18,18 @@ import com.example.awesomefish.shared.LifeFactory
 import com.example.awesomefish.shared.SoundManager
 import com.example.awesomefish.ui.GameLauncher
 
-class StageOne(context: Context, val soundManager: SoundManager) :
+class GameScene(context: Context, val soundManager: SoundManager) :
     Scene(context) {
+
+    private var gameLevel: GameLevel = GameLevel.LevelOne()
 
     private var player: Player = Player(context, 0F, 0F, 0F, 0F)
 
-    private val foods = FoodManager.createMuiltpleFood(context, FOOD_SIZE, FOOD_RESERVOIR_SIZE)
+    private val foods =
+        FoodManager.createMuiltpleFood(context, gameLevel.enemyCount, FOOD_RESERVOIR_SIZE)
 
     val badFood = FoodManager.loadBadFood(context, 4)
+
 
     private var score = 0
 
@@ -67,6 +72,7 @@ class StageOne(context: Context, val soundManager: SoundManager) :
         super.display(canvas)
         when {
             player.isDead() -> {
+                FoodManager.clearAll()
                 GameLauncher.addScene(GameOverScene(context))
             }
             else -> {
@@ -93,7 +99,8 @@ class StageOne(context: Context, val soundManager: SoundManager) :
     }
 
     private fun checkForCollision(canvas: Canvas) {
-        for (index in 0 until FoodManager.size()) {
+        println("FOOD SIZE ${FoodManager.size()}")
+        for (index in 0 until FoodManager.size() - 1) {
             if (player.hasEatenFood(FoodManager.foods[index])) {
                 soundManager.playShortSound(
                     SoundManager.ShortSound.CLICK,
@@ -185,6 +192,10 @@ class StageOne(context: Context, val soundManager: SoundManager) :
 
     override fun onResume() {
         gameRunning = true
+    }
+
+    override fun setLevel(level: GameLevel) {
+        this.gameLevel = level
     }
 
     private fun Player.hasEatenFood(food: Food): Boolean = Rect(
