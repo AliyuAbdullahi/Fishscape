@@ -40,7 +40,7 @@ object Console {
     /**
      * @param message is the text to be displayed on console. The text color is RED
      * @param inTestEnvironment is a Flag to check if in test environment, it should be set to
-     * true if in testing environtment
+     * true if in testing environment
      */
     fun error(message: String, inTestEnvironment: Boolean = false) {
         if (inTestEnvironment) {
