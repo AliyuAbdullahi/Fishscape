@@ -8,18 +8,21 @@ import android.graphics.Rect
 import android.view.MotionEvent
 import com.example.awesomefish.R
 import com.example.awesomefish.data.GameLevel
+import com.example.awesomefish.data.Score
+import com.example.awesomefish.di.DI
 import com.example.awesomefish.entities.Food
 import com.example.awesomefish.entities.Player
 import com.example.awesomefish.scene.GameOverScene
 import com.example.awesomefish.scene.Scene
-import com.example.awesomefish.shared.FontManager
-import com.example.awesomefish.shared.FoodManager
-import com.example.awesomefish.shared.LifeFactory
-import com.example.awesomefish.shared.SoundManager
+import com.example.awesomefish.shared.*
 import com.example.awesomefish.ui.GameLauncher
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class GameScene(context: Context, val soundManager: SoundManager) :
     Scene(context) {
+
+    private val scoreRepo = DI.provideScoreRepository()
 
     private var gameLevel: GameLevel = GameLevel.LevelOne()
 
@@ -72,6 +75,8 @@ class GameScene(context: Context, val soundManager: SoundManager) :
         super.display(canvas)
         when {
             player.isDead() -> {
+                ScoreManager.setTheScore(Score(score, System.currentTimeMillis()))
+                saveScore(score)
                 FoodManager.clearAll()
                 GameLauncher.addScene(GameOverScene(context))
             }
@@ -83,6 +88,12 @@ class GameScene(context: Context, val soundManager: SoundManager) :
                 drawScore(canvas)
                 drawLife(canvas)
             }
+        }
+    }
+
+    fun saveScore(score: Int) {
+        GlobalScope.launch {
+            scoreRepo.saveData(Score(score, System.currentTimeMillis()))
         }
     }
 

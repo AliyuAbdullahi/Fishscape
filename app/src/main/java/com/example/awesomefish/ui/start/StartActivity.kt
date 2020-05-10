@@ -6,16 +6,24 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
-import com.example.awesomefish.ui.stages.GameHostActivity
+import com.example.awesomefish.data.LocalStorageManager
+import com.example.awesomefish.data.Score
+import com.example.awesomefish.di.DI
 import com.example.awesomefish.shared.AnimationManager
 import com.example.awesomefish.shared.FontManager
-import com.example.awesomefish.data.LocalStorageManager
 import com.example.awesomefish.shared.SoundManager
+import com.example.awesomefish.ui.stages.GameHostActivity
 import kotlinx.android.synthetic.main.activity_splash.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class StartActivity : AppCompatActivity() {
+
 
     private lateinit var soundManager: SoundManager
 
@@ -60,13 +68,16 @@ class StartActivity : AppCompatActivity() {
 
     private fun applyAnimationOnView() {
         val translateY =
-            PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -FISH_TRANSLATION,
+            PropertyValuesHolder.ofFloat(
+                View.TRANSLATION_Y, -FISH_TRANSLATION,
                 FISH_TRANSLATION
             )
-        val rotate = PropertyValuesHolder.ofFloat(View.ROTATION_Y,
+        val rotate = PropertyValuesHolder.ofFloat(
+            View.ROTATION_Y,
             FISH_ROTATION
         )
-        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA,
+        val alpha = PropertyValuesHolder.ofFloat(
+            View.ALPHA,
             TEXT_MIN_ALPHA,
             TEXT_MAX_ALPH
         )
@@ -108,14 +119,15 @@ class StartActivity : AppCompatActivity() {
     }
 
     fun startGameScreen() {
-        Handler().postDelayed({
-            startActivity(
-                Intent(
-                    this@StartActivity,
-                    GameHostActivity::class.java
+        Handler().postDelayed(
+            {
+                startActivity(
+                    Intent(
+                        this@StartActivity,
+                        GameHostActivity::class.java
+                    )
                 )
-            )
-        },
+            },
             SPLASH_WAIT_TIME
         )
     }

@@ -8,14 +8,13 @@ import android.graphics.Paint
 import android.util.Log
 import android.view.MotionEvent
 import com.example.awesomefish.R
-import com.example.awesomefish.shared.FontManager
-import com.example.awesomefish.shared.of
-import com.example.awesomefish.shared.percent
-import com.example.awesomefish.shared.rect
+import com.example.awesomefish.shared.*
 
 class GameOverScene(context: Context) : AbstractScene(context) {
 
     private lateinit var gameOverClickedListener: GameOverClickListener
+
+    private val scoreText = ScoreManager.score.scoreValue
 
     private val gameOverText = context.getString(R.string.game_over)
 
@@ -27,6 +26,8 @@ class GameOverScene(context: Context) : AbstractScene(context) {
 
     private val newGamePaint = Paint()
 
+    private val scorePaint = Paint()
+
     private var gameOverTextX = 0
     private var gameOverTextY = 0
 
@@ -35,6 +36,9 @@ class GameOverScene(context: Context) : AbstractScene(context) {
 
     private var quitGameTextX = 0
     private var quitGameTextY = 0
+
+    private var scoreTextX = 0
+    private var scoreTextY = 0
 
     override fun onAttach() {
         try {
@@ -57,21 +61,31 @@ class GameOverScene(context: Context) : AbstractScene(context) {
             textSize = FontManager.FontSize.MEDIUM
             color = Color.YELLOW
         }
+
+        scorePaint.apply {
+            typeface = FontManager.getTypeForFont(context, FontManager.Font.GLADIATOR_SPORT)
+            textSize = FontManager.FontSize.LARGE
+            color = Color.BLUE
+        }
     }
 
     override fun display(canvas: Canvas) {
-
         gameOverTextX =
             ((canvas.width / 2) - (gameOverText.length * FontManager.FontSize.LARGE) / 2).toInt()
         gameOverTextY = (30.toFloat() percent of number canvas.height.toFloat()).toInt()
 
+        scoreTextX =
+            ((canvas.width / 2) - ((SCORE_NAME.length + scoreText.toString().length - 1) * FontManager.FontSize.LARGE) / 2).toInt()
+        scoreTextY = (45.toFloat() percent of number canvas.height.toFloat()).toInt()
+
         newGameTextX =
             ((canvas.width / 2) - (newGameText.length * FontManager.FontSize.MEDIUM) / 2).toInt()
-        newGameTextY = (45.toFloat() percent of number canvas.height.toFloat()).toInt()
+        newGameTextY = (60.toFloat() percent of number canvas.height.toFloat()).toInt()
 
         quitGameTextX =
             ((canvas.width / 2) - (quitGameText.length * FontManager.FontSize.MEDIUM) / 2).toInt()
-        quitGameTextY = (60.toFloat() percent of number canvas.height.toFloat()).toInt()
+        quitGameTextY = (75.toFloat() percent of number canvas.height.toFloat()).toInt()
+
 
         val background = BitmapFactory.decodeResource(context.resources, R.drawable.splash)
         canvas.drawBitmap(background, 0F, 0F, null)
@@ -81,6 +95,13 @@ class GameOverScene(context: Context) : AbstractScene(context) {
             gameOverTextX.toFloat(),
             gameOverTextY.toFloat(),
             gameOverPaint
+        )
+
+        canvas.drawText(
+            "$SCORE_NAME${scoreText}",
+            scoreTextX.toFloat(),
+            scoreTextY.toFloat(),
+            scorePaint
         )
 
         canvas.drawText(
@@ -136,9 +157,7 @@ class GameOverScene(context: Context) : AbstractScene(context) {
         return false
     }
 
-    override fun update() {
-
-    }
+    override fun update() {}
 
     override fun stopRunning() {
         // do nothing
@@ -147,5 +166,9 @@ class GameOverScene(context: Context) : AbstractScene(context) {
     interface GameOverClickListener {
         fun newGameClicked()
         fun quitGameClicked()
+    }
+
+    companion object {
+        private const val SCORE_NAME = "SCORE: "
     }
 }
