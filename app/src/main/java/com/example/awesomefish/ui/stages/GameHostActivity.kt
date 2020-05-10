@@ -1,18 +1,20 @@
 package com.example.awesomefish.ui.stages
 
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
+import com.example.awesomefish.menu.PAUSE_MENU_TAG
 import com.example.awesomefish.menu.PauseMenu
+import com.example.awesomefish.scene.GameOverScene
+import com.example.awesomefish.shared.FoodManager
 import com.example.awesomefish.shared.SoundManager
 import com.example.awesomefish.ui.GameLauncher
 import java.util.*
 
-class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedListener {
+class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedListener,
+    GameOverScene.GameOverClickListener {
     private lateinit var launcher: GameLauncher
     private lateinit var soundManager: SoundManager
 
@@ -48,22 +50,26 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     override fun onResume() {
         super.onResume()
         soundManager.resume()
+        launcher.onResume()
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun showMenuDialog() {
         soundManager.playShortSound(SoundManager.ShortSound.REVEAL_TWO, SoundManager.Loop.DONT_LOOP)
         PauseMenu.show(supportFragmentManager)
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun hideMenuDialog() {
-        soundManager.playShortSound(SoundManager.ShortSound.REVEAL_TWO, SoundManager.Loop.DONT_LOOP)
-        PauseMenu.hide(supportFragmentManager)
+        if (supportFragmentManager.findFragmentByTag(PAUSE_MENU_TAG) != null) {
+            soundManager.playShortSound(
+                SoundManager.ShortSound.REVEAL_TWO,
+                SoundManager.Loop.DONT_LOOP
+            )
+            PauseMenu.hide(supportFragmentManager)
+        }
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBackPressed() {
+        launcher.onPause()
         showMenuDialog()
     }
 
@@ -72,11 +78,6 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
         launcher.onDestroy()
     }
 
-    companion object {
-        const val LOOP_INTERVAL = (1000 / 60).toLong()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun resumeClicked() {
         hideMenuDialog()
     }
@@ -93,7 +94,6 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
         showQuitDialog()
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun showQuitDialog() {
         AlertDialog.Builder(this)
             .setTitle(R.string.quit_dialog_title)
@@ -108,4 +108,18 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
                 hideMenuDialog()
             }.create().show()
     }
+
+    override fun newGameClicked() {
+        FoodManager.clearAll()
+        GameLauncher.addScene(GameScene(this, soundManager))
+    }
+
+    override fun quitGameClicked() {
+        showQuitDialog()
+    }
+
+    companion object {
+        const val LOOP_INTERVAL = (1000 / 60).toLong()
+    }
+
 }

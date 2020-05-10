@@ -9,26 +9,59 @@ import android.os.Build
 import android.view.MotionEvent
 import androidx.annotation.RequiresApi
 import com.example.awesomefish.R
+import com.example.awesomefish.data.GameLevel
 import com.example.awesomefish.entities.Food
 import com.example.awesomefish.entities.Player
+import com.example.awesomefish.scene.GameOverScene
 import com.example.awesomefish.scene.Scene
 import com.example.awesomefish.shared.FontManager
 import com.example.awesomefish.shared.FoodManager
 import com.example.awesomefish.shared.LifeFactory
 import com.example.awesomefish.shared.SoundManager
+import com.example.awesomefish.ui.GameLauncher
 
-class StageOne(context: Context, val soundManager: SoundManager) :
+class GameScene(context: Context, val soundManager: SoundManager) :
     Scene(context) {
+
+    private var gameLevel: GameLevel = GameLevel.LevelOne()
 
     private var player: Player = Player(context, 0F, 0F, 0F, 0F)
 
-    private val foods = FoodManager.createMuiltpleFood(context, FOOD_SIZE, FOOD_RESERVOIR_SIZE)
+    private val foods =
+        FoodManager.createMuiltpleFood(context, gameLevel.enemyCount, FOOD_RESERVOIR_SIZE)
 
     val badFood = FoodManager.loadBadFood(context, 4)
 
+
     private var score = 0
 
+    private var gameRunning: Boolean = true
+
     private val scorePaint = Paint()
+
+    override fun isRunning() = gameRunning
+
+    override fun stopRunning() {
+        gameRunning = false
+    }
+
+    override fun startRunning() {
+        gameRunning = true
+    }
+
+    override fun update() {
+        player.update()
+
+        if (FoodManager.hasFood()) {
+            FoodManager.foods.forEach {
+                it.update()
+            }
+
+            for (food in FoodManager.badFood) {
+                food.update()
+            }
+        }
+    }
 
     init {
         scorePaint.isAntiAlias = true
@@ -40,21 +73,17 @@ class StageOne(context: Context, val soundManager: SoundManager) :
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun display(canvas: Canvas) {
         super.display(canvas)
-
         when {
             player.isDead() -> {
-                //send game over event
+                FoodManager.clearAll()
+                GameLauncher.addScene(GameOverScene(context))
             }
             else -> {
-
                 setFoodPosition(canvas)
-
                 drawPlayer(canvas)
-
+                checkForCollision(canvas)
                 drawFood(canvas)
-
                 drawScore(canvas)
-
                 drawLife(canvas)
             }
         }
@@ -71,8 +100,11 @@ class StageOne(context: Context, val soundManager: SoundManager) :
         player.maxY = canvas.height.toFloat()
 
         player.draw(canvas)
+    }
 
-        for (index in 0 until FoodManager.size()) {
+    private fun checkForCollision(canvas: Canvas) {
+        println("FOOD SIZE ${FoodManager.size()}")
+        for (index in 0 until FoodManager.size() - 1) {
             if (player.hasEatenFood(FoodManager.foods[index])) {
                 soundManager.playShortSound(
                     SoundManager.ShortSound.CLICK,
@@ -148,8 +180,8 @@ class StageOne(context: Context, val soundManager: SoundManager) :
         return R.drawable.background
     }
 
-    override fun onTouch(motinEvent: MotionEvent): Boolean {
-        motinEvent.let {
+    override fun onTouch(motionEvent: MotionEvent): Boolean {
+        motionEvent.let {
             player.screenClicked = it.action == MotionEvent.ACTION_DOWN
             if (player.screenClicked) {
                 player.pushUp()
@@ -159,11 +191,15 @@ class StageOne(context: Context, val soundManager: SoundManager) :
     }
 
     override fun onPause() {
-        //save data here
+        gameRunning = false
     }
 
     override fun onResume() {
-        // Restore data here
+        gameRunning = true
+    }
+
+    override fun setLevel(level: GameLevel) {
+        this.gameLevel = level
     }
 
     private fun Player.hasEatenFood(food: Food): Boolean = Rect(

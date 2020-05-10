@@ -5,13 +5,14 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import com.example.awesomefish.R
+import com.example.awesomefish.shared.Console
 
 const val MIN_PLAYER_Y = 50F
 const val MAX_PLAYER_Y_OFFSET = 200
 const val MAX_POSSIBLE_LIFE = 6
 
 class Player(
-    var playerContext: Context,
+    private var playerContext: Context,
     var playerX: Float,
     var playerY: Float = Float.MIN_VALUE,
     var maxX: Float,
@@ -22,12 +23,13 @@ class Player(
 
     var screenClicked = false
 
-    var speed = 15
+    var speed = PLAYER_SPEED
 
-    private var playerDead = false
+    private val playerDead
+        get() = lifeCount == 0
 
     //This will change when we implement pause and resume and will be loaded from game data
-    private var lifeCount = 3
+    private var lifeCount = LIFE_COUNT
 
     val life: Int
         get() = lifeCount
@@ -37,8 +39,9 @@ class Player(
     override fun update() {
         if (playerDead.not()) {
             if (lifeCount <= 0) {
-                playerDead = true
+                return
             }
+            printDebug()
             playerY = playerY + speed
 
             if (playerY >= (maxY - MAX_PLAYER_Y_OFFSET)) {
@@ -49,13 +52,15 @@ class Player(
                 playerY = MIN_PLAYER_Y
             }
 
-            speed += 5
+            speed += SPEED_INCREMENT_VALUE
         }
     }
 
     fun reduceLife(count: Int) {
-        if (lifeCount > 0) {
+        if (lifeCount > 0 && lifeCount >= count) {
             lifeCount -= count
+        } else {
+            lifeCount = 0
         }
     }
 
@@ -67,7 +72,6 @@ class Player(
     fun isDead() = playerDead == true
 
     override fun draw(canvas: Canvas) {
-        update()
         checkClickedAndDraw(playerContext, canvas)
         playerWidth = playerImage.width.toFloat()
         playerHeight = playerImage.height.toFloat()
@@ -78,26 +82,35 @@ class Player(
             playerImage = BitmapFactory.decodeResource(context.resources, R.drawable.fish2)
             if (screenClicked) {
                 canvas.drawBitmap(playerImage, playerX, playerY, null)
+                Console.warn("Loaded... $playerX , $playerY ")
                 screenClicked = false
             } else {
                 imageResource()?.let { image ->
                     playerImage = BitmapFactory.decodeResource(context.resources, image)
-                    println("Loaded... $playerX , $playerY ")
                     canvas.drawBitmap(playerImage, playerX, playerY, null)
                 }
             }
         }
     }
 
-    override fun updatePosition(x: Float, y: Float) {}
+    override fun updatePosition(x: Float, y: Float) {
+        //will be refactored. Entity position should be updated here
+    }
 
     fun pushUp() {
-        speed = -25
+        speed = -BUMP_VALUE
     }
 
     override fun imageResource(): Int? = R.drawable.fish1
 
     fun printDebug() {
-        println("X: ${this.playerX}, Y: ${this.playerY}, width: ${this.playerWidth}, height: ${this.playerHeight}")
+        Console.log("X: ${this.playerX}, Y: ${this.playerY}, width: ${this.playerWidth}, height: ${this.playerHeight}", Console.TextColor.Purple)
+    }
+
+    companion object {
+        private const val PLAYER_SPEED = 15
+        private const val LIFE_COUNT = 3
+        private const val BUMP_VALUE = 25
+        private const val SPEED_INCREMENT_VALUE = 5
     }
 }

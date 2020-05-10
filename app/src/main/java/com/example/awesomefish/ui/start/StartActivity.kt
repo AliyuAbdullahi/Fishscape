@@ -13,7 +13,7 @@ import com.example.awesomefish.R
 import com.example.awesomefish.ui.stages.GameHostActivity
 import com.example.awesomefish.shared.AnimationManager
 import com.example.awesomefish.shared.FontManager
-import com.example.awesomefish.shared.LocalStorageManager
+import com.example.awesomefish.data.LocalStorageManager
 import com.example.awesomefish.shared.SoundManager
 import kotlinx.android.synthetic.main.activity_splash.*
 

@@ -7,24 +7,22 @@ import android.view.View
 import com.example.awesomefish.scene.Scene
 import com.example.awesomefish.scene.SceneManager
 import com.example.awesomefish.shared.SoundManager
-import com.example.awesomefish.ui.stages.StageOne
-import java.time.Clock
-import java.time.Clock.tick
-import java.time.Duration
+import com.example.awesomefish.ui.stages.GameScene
 
+class GameLauncher(context: Context, soundManager: SoundManager) : View(context){
 
-class GameLauncher(context: Context, soundManager: SoundManager) : View(context) {
-
-    private var stageOne: Scene = StageOne(context, soundManager)
     private var running = true
 
     init {
         //This is a temp for now, eventually, we would load appropriate scene from stored progress
-        SceneManager.addScene(stageOne)
+        SceneManager.addScene(GameScene(context, soundManager))
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+        if (SceneManager.get().isRunning()) {
+            SceneManager.get().update()
+        }
         canvas?.let { theCanvas ->
             SceneManager.get().display(theCanvas)
         }
@@ -35,14 +33,20 @@ class GameLauncher(context: Context, soundManager: SoundManager) : View(context)
     }
 
     fun onPause() {
-        SceneManager.get().onPause()
+        SceneManager.get().stopRunning()
     }
 
     fun onResume() {
-        SceneManager.get().onResume()
+        SceneManager.get().startRunning()
     }
 
     fun onDestroy() {
         SceneManager.get().onDestroy()
+    }
+
+    companion object {
+        fun addScene(scene: Scene) {
+            SceneManager.addScene(scene)
+        }
     }
 }
