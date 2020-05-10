@@ -5,7 +5,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
+import android.os.Build
 import android.view.MotionEvent
+import androidx.annotation.RequiresApi
 import com.example.awesomefish.R
 import com.example.awesomefish.entities.Food
 import com.example.awesomefish.entities.Player
@@ -35,6 +37,7 @@ class StageOne(context: Context, val soundManager: SoundManager) :
         scorePaint.textSize = FontManager.FontSize.MEDIUM
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun display(canvas: Canvas) {
         super.display(canvas)
 
@@ -62,6 +65,7 @@ class StageOne(context: Context, val soundManager: SoundManager) :
     }
 
     var badFoodCount = 0
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun drawPlayer(canvas: Canvas) {
         player.maxX = canvas.width.toFloat()
         player.maxY = canvas.height.toFloat()
@@ -176,6 +180,7 @@ class StageOne(context: Context, val soundManager: SoundManager) :
         )
     )
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onDestroy() {
         soundManager.unload(SoundManager.MENU_1)
         SoundManager.clear()

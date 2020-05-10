@@ -1,7 +1,9 @@
 package com.example.awesomefish.ui.stages
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
@@ -48,16 +50,19 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
         soundManager.resume()
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun showMenuDialog() {
         soundManager.playShortSound(SoundManager.ShortSound.REVEAL_TWO, SoundManager.Loop.DONT_LOOP)
         PauseMenu.show(supportFragmentManager)
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun hideMenuDialog() {
         soundManager.playShortSound(SoundManager.ShortSound.REVEAL_TWO, SoundManager.Loop.DONT_LOOP)
         PauseMenu.hide(supportFragmentManager)
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBackPressed() {
         showMenuDialog()
     }
@@ -71,6 +76,7 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
         const val LOOP_INTERVAL = (1000 / 60).toLong()
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun resumeClicked() {
         hideMenuDialog()
     }
@@ -87,6 +93,7 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
         showQuitDialog()
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun showQuitDialog() {
         AlertDialog.Builder(this)
             .setTitle(R.string.quit_dialog_title)
