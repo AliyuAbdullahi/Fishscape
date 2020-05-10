@@ -81,6 +81,7 @@ class SoundManager private constructor(val context: Context) {
         }
     }
 
+
     fun stopSound(index: Int) {
         soundPool?.stop(index)
     }
