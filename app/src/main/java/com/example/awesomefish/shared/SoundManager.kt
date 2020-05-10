@@ -7,10 +7,8 @@ import android.media.AudioAttributes.USAGE_GAME
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.SoundPool
-import android.os.Build
 import android.util.SparseArray
 import androidx.annotation.RawRes
-import androidx.annotation.RequiresApi
 import com.example.awesomefish.R
 
 class SoundManager private constructor(val context: Context) {
@@ -19,13 +17,11 @@ class SoundManager private constructor(val context: Context) {
 
     private var mediaPlayerReleased = true
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private var audioAttributes = AudioAttributes.Builder()
         .setContentType(CONTENT_TYPE_MUSIC)
         .setUsage(USAGE_GAME)
         .build()
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private var soundPool: SoundPool? =
         SoundPool.Builder().setMaxStreams(MAX_SOUND).setAudioAttributes(audioAttributes).build()
 
@@ -43,7 +39,6 @@ class SoundManager private constructor(val context: Context) {
         mediaPlayerReleased = false
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun playShortSound(sound: ShortSound, loop: Loop) {
         if (isSoundTurnedOff) return
         val soundId = soundPool?.load(context, sound.resId, 1)!!
@@ -56,12 +51,10 @@ class SoundManager private constructor(val context: Context) {
         })
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun unload(index: Int) {
         soundPool?.unload(index)
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun unloadAll(vararg indexes: Int) {
         for (index in indexes) {
             soundPool?.unload(index)
@@ -88,7 +81,7 @@ class SoundManager private constructor(val context: Context) {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+
     fun stopSound(index: Int) {
         soundPool?.stop(index)
     }
@@ -131,7 +124,6 @@ class SoundManager private constructor(val context: Context) {
         @Volatile
         private var soundManager: SoundManager? = null
 
-        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         fun clear() {
             if (soundManager != null) {
                 soundManager?.soundPool?.release()

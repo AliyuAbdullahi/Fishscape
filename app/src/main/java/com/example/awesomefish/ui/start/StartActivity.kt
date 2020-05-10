@@ -3,11 +3,9 @@ package com.example.awesomefish.ui.start
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
 import com.example.awesomefish.ui.stages.GameHostActivity
@@ -21,7 +19,6 @@ class StartActivity : AppCompatActivity() {
 
     private lateinit var soundManager: SoundManager
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -32,7 +29,6 @@ class StartActivity : AppCompatActivity() {
         processStartGame()
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun processStartGame() {
         startGame.setOnClickListener {
             val zoomX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.5F, 0.5F)
