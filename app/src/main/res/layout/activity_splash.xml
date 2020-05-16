@@ -22,8 +22,8 @@
 
     <ImageView
         android:id="@+id/fishImage"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="306dp"
+        android:layout_height="244dp"
         android:layout_below="@id/splashTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="48dp"
@@ -35,25 +35,40 @@
 
     <TextView
         android:id="@+id/startGame"
-        android:textColor="@color/start_button_pressed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/fishImage"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:textSize="@dimen/fontSize48"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/start_button_pressed"
+        android:textSize="@dimen/fontSize32"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fishImage" />
+        app:layout_constraintTop_toBottomOf="@+id/fishImage"
+        tools:text="Start Game" />
 
     <TextView
         android:id="@+id/resumeGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:textSize="@dimen/fontSize48"
+        android:layout_marginTop="24dp"
+        android:textSize="@dimen/fontSize32"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startGame" />
+        app:layout_constraintTop_toBottomOf="@+id/startGame"
+        tools:text="Resume Game" />
+
+    <TextView
+        android:background="?selectableItemBackground"
+        android:id="@+id/highScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/high_score"
+        android:textSize="@dimen/fontSize32"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="High Score"
+        app:layout_constraintTop_toBottomOf="@+id/resumeGame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

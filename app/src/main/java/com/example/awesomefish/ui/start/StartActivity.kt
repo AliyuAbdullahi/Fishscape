@@ -6,21 +6,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
 import com.example.awesomefish.data.LocalStorageManager
-import com.example.awesomefish.data.Score
-import com.example.awesomefish.di.DI
 import com.example.awesomefish.shared.AnimationManager
 import com.example.awesomefish.shared.FontManager
 import com.example.awesomefish.shared.SoundManager
+import com.example.awesomefish.ui.dialogs.HighscoreDialog
 import com.example.awesomefish.ui.stages.GameHostActivity
 import kotlinx.android.synthetic.main.activity_splash.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class StartActivity : AppCompatActivity() {
 
@@ -35,12 +29,13 @@ class StartActivity : AppCompatActivity() {
         setUpView()
         applyAnimationOnView()
         processStartGame()
+        setUpClickListener()
     }
 
     private fun processStartGame() {
         startGame.setOnClickListener {
-            val zoomX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.5F, 0.5F)
-            val zoomY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.5F, 0.5F)
+            val zoomX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.3F, 0.8F)
+            val zoomY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.3F, 0.8F)
             val zoomAnimationPropertyHolder = arrayOf(zoomX, zoomY)
             AnimationManager.applyAnimationsOn(
                 startGame,
@@ -61,9 +56,16 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
+    private fun setUpClickListener() {
+        highScore.setOnClickListener {
+            HighscoreDialog.show(supportFragmentManager)
+        }
+    }
+
     private fun setUpFont() {
         splashTitle.setTypeface(FontManager.getTypeForFont(this, FontManager.Font.SPACE_QUEST_XJ4O))
         startGame.setTypeface(FontManager.getTypeForFont(this, FontManager.Font.SQUIRK))
+        highScore.setTypeface(FontManager.getTypeForFont(this, FontManager.Font.SQUIRK))
     }
 
     private fun applyAnimationOnView() {
