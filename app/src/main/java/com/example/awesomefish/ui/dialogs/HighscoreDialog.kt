@@ -1,6 +1,8 @@
 package com.example.awesomefish.ui.dialogs
 
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +32,7 @@ class HighscoreDialog : DialogFragment() {
 
         // request a window without the title
         dialog.getWindow()?.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return dialog
     }
 

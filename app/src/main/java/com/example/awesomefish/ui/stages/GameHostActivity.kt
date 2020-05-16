@@ -1,9 +1,14 @@
 package com.example.awesomefish.ui.stages
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import androidx.appcompat.app.AlertDialog
+import android.view.Window
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
 import com.example.awesomefish.scene.GameOverScene
@@ -14,6 +19,7 @@ import com.example.awesomefish.ui.menu.PAUSE_MENU_TAG
 import com.example.awesomefish.ui.menu.PauseMenu
 import com.example.awesomefish.ui.start.StartActivity
 import java.util.*
+import kotlin.system.exitProcess
 
 class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedListener,
     GameOverScene.GameOverClickListener {
@@ -97,7 +103,7 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     }
 
     private fun showQuitDialog() {
-        AlertDialog.Builder(this)
+        /*AlertDialog.Builder(this)
             .setTitle(R.string.quit_dialog_title)
             .setMessage(R.string.quit_dialog_message)
             .setPositiveButton(
@@ -108,7 +114,23 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
                 getString(R.string.no)
             ) { _, _ ->
                 hideMenuDialog()
-            }.create().show()
+            }.create().show()*/
+
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.quit_game_dialog)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(true)
+        dialog.show()
+        val positiveBtn:Button = dialog.findViewById(R.id.quit_positive_button)
+        val negativeBtn:Button = dialog.findViewById(R.id.quit_negative__button)
+        positiveBtn.setOnClickListener {
+            finish()
+            exitProcess(0)
+        }
+        negativeBtn.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 
     override fun newGameClicked() {
