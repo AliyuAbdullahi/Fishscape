@@ -23,7 +23,7 @@ private const val HIGH_SCORE_TAG = "highScore"
 
 class HighscoreDialog : DialogFragment() {
 
-    val repository = DI.provideScoreRepository()
+    private val repository = DI.provideScoreRepository()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog: Dialog = super.onCreateDialog(savedInstanceState)
@@ -49,7 +49,7 @@ class HighscoreDialog : DialogFragment() {
                     layoutManager = LinearLayoutManager(context)
                     adapter = HighscoreListAdapter(
                         repository.getAll().sortedBy { it.scoreValue }
-                        .reversed().toMutableList())
+                            .reversed().toMutableList())
                 }
             }
         }

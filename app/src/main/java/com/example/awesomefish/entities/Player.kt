@@ -21,6 +21,8 @@ class Player(
     var playerHeight: Float = 0F
 ) : Entity(playerContext, playerX, playerY, 0F, 0F, playerWidth, playerHeight) {
 
+    var isHurt: Boolean = false
+
     var screenClicked = false
 
     var speed = PLAYER_SPEED
@@ -77,6 +79,19 @@ class Player(
         playerHeight = playerImage.height.toFloat()
     }
 
+    private fun showHurtImage(canvas: Canvas) {
+        context?.let { theContext ->
+            val hurtBitMap =
+                BitmapFactory.decodeResource(theContext.resources, R.drawable.blood_splatter)
+            canvas.drawBitmap(
+                hurtBitMap,
+                (playerX + (playerWidth / 2) + hurtBitMap.width / 6),
+                playerY - playerHeight / 2 + hurtBitMap.height,
+                null
+            )
+        }
+    }
+
     private fun checkClickedAndDraw(context: Context?, canvas: Canvas) {
         context?.let {
             playerImage = BitmapFactory.decodeResource(context.resources, R.drawable.fish2)
@@ -89,6 +104,11 @@ class Player(
                     playerImage = BitmapFactory.decodeResource(context.resources, image)
                     canvas.drawBitmap(playerImage, playerX, playerY, null)
                 }
+            }
+
+            if (isHurt) {
+                showHurtImage(canvas)
+                isHurt = false
             }
         }
     }

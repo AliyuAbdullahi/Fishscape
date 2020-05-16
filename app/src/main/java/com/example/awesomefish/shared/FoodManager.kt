@@ -133,6 +133,7 @@ object FoodManager {
 
     fun clearAll() = synchronized(this) {
         foodSize = 0
+        foodReservoir.clear()
         foods.clear()
         badFood.clear()
     }
