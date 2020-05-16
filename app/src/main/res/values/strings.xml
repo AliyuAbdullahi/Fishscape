@@ -16,4 +16,5 @@
     <string name="high_scores">HIGH SCORES</string>
     <string name="quit_game">Quit Game</string>
     <string name="score_value">%1$s</string>
+    <string name="main_menu">"Main Menu"</string>
 </resources>

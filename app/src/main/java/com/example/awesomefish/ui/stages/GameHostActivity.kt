@@ -1,16 +1,18 @@
 package com.example.awesomefish.ui.stages
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
-import com.example.awesomefish.ui.menu.PAUSE_MENU_TAG
-import com.example.awesomefish.ui.menu.PauseMenu
 import com.example.awesomefish.scene.GameOverScene
 import com.example.awesomefish.shared.FoodManager
 import com.example.awesomefish.shared.SoundManager
 import com.example.awesomefish.ui.GameLauncher
+import com.example.awesomefish.ui.menu.PAUSE_MENU_TAG
+import com.example.awesomefish.ui.menu.PauseMenu
+import com.example.awesomefish.ui.start.StartActivity
 import java.util.*
 
 class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedListener,
@@ -116,6 +118,12 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
 
     override fun quitGameClicked() {
         showQuitDialog()
+    }
+
+    override fun mainMenuClicked() {
+        soundManager.stopBackgroundSound()
+        startActivity(Intent(this, StartActivity::class.java))
+        finish()
     }
 
     companion object {

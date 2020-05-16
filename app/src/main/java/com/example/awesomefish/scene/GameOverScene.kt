@@ -22,6 +22,8 @@ class GameOverScene(context: Context) : AbstractScene(context) {
 
     private val quitGameText = context.getString(R.string.quit_game)
 
+    private val mainMenuText = context.getString(R.string.main_menu)
+
     private val gameOverPaint = Paint()
 
     private val newGamePaint = Paint()
@@ -39,6 +41,9 @@ class GameOverScene(context: Context) : AbstractScene(context) {
 
     private var scoreTextX = 0
     private var scoreTextY = 0
+
+    private var mainMenuX = 0
+    private var mainMenuY = 0
 
     override fun onAttach() {
         try {
@@ -72,19 +77,23 @@ class GameOverScene(context: Context) : AbstractScene(context) {
     override fun display(canvas: Canvas) {
         gameOverTextX =
             ((canvas.width / 2) - (gameOverText.length * FontManager.FontSize.LARGE) / 2).toInt()
-        gameOverTextY = (30.toFloat() percent of number canvas.height.toFloat()).toInt()
+        gameOverTextY = (15.toFloat() percent of number canvas.height.toFloat()).toInt()
 
         scoreTextX =
             ((canvas.width / 2) - ((SCORE_NAME.length + scoreText.toString().length - 1) * FontManager.FontSize.LARGE) / 2).toInt()
-        scoreTextY = (45.toFloat() percent of number canvas.height.toFloat()).toInt()
+        scoreTextY = (30.toFloat() percent of number canvas.height.toFloat()).toInt()
 
         newGameTextX =
             ((canvas.width / 2) - (newGameText.length * FontManager.FontSize.MEDIUM) / 2).toInt()
-        newGameTextY = (60.toFloat() percent of number canvas.height.toFloat()).toInt()
+        newGameTextY = (45.toFloat() percent of number canvas.height.toFloat()).toInt()
 
         quitGameTextX =
             ((canvas.width / 2) - (quitGameText.length * FontManager.FontSize.MEDIUM) / 2).toInt()
-        quitGameTextY = (75.toFloat() percent of number canvas.height.toFloat()).toInt()
+        quitGameTextY = (60.toFloat() percent of number canvas.height.toFloat()).toInt()
+
+        mainMenuX =
+            ((canvas.width / 2) - (mainMenuText.length * FontManager.FontSize.MEDIUM) / 2).toInt()
+        mainMenuY = (75.toFloat() percent of number canvas.height.toFloat()).toInt()
 
 
         val background = BitmapFactory.decodeResource(context.resources, R.drawable.splash)
@@ -117,6 +126,13 @@ class GameOverScene(context: Context) : AbstractScene(context) {
             quitGameTextY.toFloat(),
             newGamePaint
         )
+
+        canvas.drawText(
+            mainMenuText,
+            mainMenuX.toFloat(),
+            mainMenuY.toFloat(),
+            newGamePaint
+        )
     }
 
     override fun onTouch(motionEvent: MotionEvent): Boolean {
@@ -138,6 +154,13 @@ class GameOverScene(context: Context) : AbstractScene(context) {
                     Log.d("EVENT", "NEW GAME CLICKED")
                     gameOverClickedListener.newGameClicked()
                     return true
+                }
+                mainMenuText.rect(
+                    mainMenuX - 150,
+                    mainMenuY,
+                    FontManager.FontSize.MEDIUM.toInt()
+                ).contains(xCoord.toInt(), yCoord.toInt()) -> {
+                    gameOverClickedListener.mainMenuClicked()
                 }
                 quitGameText.rect(
                     quitGameTextX - 150,
@@ -166,6 +189,7 @@ class GameOverScene(context: Context) : AbstractScene(context) {
     interface GameOverClickListener {
         fun newGameClicked()
         fun quitGameClicked()
+        fun mainMenuClicked()
     }
 
     companion object {
