@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="280dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true">
+
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/dialog" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="4dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/splash_icon"/>
+
+        <TextView
+            android:id="@+id/quit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/quit"
+            android:textColor="@color/colorGold"
+            android:textSize="@dimen/fontSize32"
+            android:layout_below="@id/imageView"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="@string/quit_game_confirm_text"
+            android:textAlignment="center"
+            android:textColor="@color/colorGold"
+            android:textSize="@dimen/fontSize20"
+            android:layout_below="@id/quit_text"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/quit_positive_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:icon="@drawable/ic_check_circle_black_24dp"
+            app:iconSize="50dp"
+            app:iconTint="#16DA1E"
+            android:paddingStart="20dp"
+            android:backgroundTint="@android:color/transparent"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_alignParentEnd="true"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/quit_negative__button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:icon="@drawable/ic_cancel_black_24dp"
+            app:iconTint="#FB0303"
+            app:iconSize="50dp"
+            android:paddingStart="20dp"
+            android:backgroundTint="@android:color/transparent"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_alignParentStart="true"/>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

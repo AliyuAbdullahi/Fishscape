@@ -5,7 +5,9 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.DisplayMetrics
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
 import com.example.awesomefish.data.LocalStorageManager
@@ -15,6 +17,7 @@ import com.example.awesomefish.shared.SoundManager
 import com.example.awesomefish.ui.dialogs.HighscoreDialog
 import com.example.awesomefish.ui.stages.GameHostActivity
 import kotlinx.android.synthetic.main.activity_splash.*
+
 
 class StartActivity : AppCompatActivity() {
 
@@ -31,6 +34,8 @@ class StartActivity : AppCompatActivity() {
         processStartGame()
         setUpClickListener()
     }
+
+    
 
     private fun processStartGame() {
         startGame.setOnClickListener {
