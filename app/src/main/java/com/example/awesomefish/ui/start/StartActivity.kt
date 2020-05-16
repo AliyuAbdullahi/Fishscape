@@ -35,7 +35,7 @@ class StartActivity : AppCompatActivity() {
         setUpClickListener()
     }
 
-    
+
 
     private fun processStartGame() {
         startGame.setOnClickListener {

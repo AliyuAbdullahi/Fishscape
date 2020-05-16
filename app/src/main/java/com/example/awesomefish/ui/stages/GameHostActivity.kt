@@ -103,11 +103,10 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     }
 
     private fun showQuitDialog() {
-
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.quit_game_dialog)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(true)
         dialog.show()
         val positiveBtn:Button = dialog.findViewById(R.id.quit_positive_button)
