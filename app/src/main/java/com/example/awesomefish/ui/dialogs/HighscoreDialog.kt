@@ -31,8 +31,8 @@ class HighscoreDialog : DialogFragment() {
         val dialog: Dialog = super.onCreateDialog(savedInstanceState)
 
         // request a window without the title
-        dialog.getWindow()?.requestFeature(Window.FEATURE_NO_TITLE)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return dialog
     }
 

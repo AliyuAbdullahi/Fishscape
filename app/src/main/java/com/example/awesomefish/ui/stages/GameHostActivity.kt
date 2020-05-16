@@ -103,19 +103,6 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     }
 
     private fun showQuitDialog() {
-        /*AlertDialog.Builder(this)
-            .setTitle(R.string.quit_dialog_title)
-            .setMessage(R.string.quit_dialog_message)
-            .setPositiveButton(
-                getString(R.string.yes)
-            ) { _, _ ->
-                finish()
-            }.setNegativeButton(
-                getString(R.string.no)
-            ) { _, _ ->
-                hideMenuDialog()
-            }.create().show()*/
-
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.quit_game_dialog)
