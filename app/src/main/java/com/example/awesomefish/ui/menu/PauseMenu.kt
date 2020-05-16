@@ -1,4 +1,4 @@
-package com.example.awesomefish.menu
+package com.example.awesomefish.ui.menu
 
 import android.app.Dialog
 import android.content.Context

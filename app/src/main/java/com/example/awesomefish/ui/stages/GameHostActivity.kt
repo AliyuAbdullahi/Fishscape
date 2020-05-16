@@ -5,8 +5,8 @@ import android.os.Handler
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
-import com.example.awesomefish.menu.PAUSE_MENU_TAG
-import com.example.awesomefish.menu.PauseMenu
+import com.example.awesomefish.ui.menu.PAUSE_MENU_TAG
+import com.example.awesomefish.ui.menu.PauseMenu
 import com.example.awesomefish.scene.GameOverScene
 import com.example.awesomefish.shared.FoodManager
 import com.example.awesomefish.shared.SoundManager

@@ -8,14 +8,16 @@ import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
-import com.example.awesomefish.ui.stages.GameHostActivity
+import com.example.awesomefish.data.LocalStorageManager
 import com.example.awesomefish.shared.AnimationManager
 import com.example.awesomefish.shared.FontManager
-import com.example.awesomefish.data.LocalStorageManager
 import com.example.awesomefish.shared.SoundManager
+import com.example.awesomefish.ui.dialogs.HighscoreDialog
+import com.example.awesomefish.ui.stages.GameHostActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class StartActivity : AppCompatActivity() {
+
 
     private lateinit var soundManager: SoundManager
 
@@ -27,12 +29,13 @@ class StartActivity : AppCompatActivity() {
         setUpView()
         applyAnimationOnView()
         processStartGame()
+        setUpClickListener()
     }
 
     private fun processStartGame() {
         startGame.setOnClickListener {
-            val zoomX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.5F, 0.5F)
-            val zoomY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.5F, 0.5F)
+            val zoomX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.3F, 0.8F)
+            val zoomY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.3F, 0.8F)
             val zoomAnimationPropertyHolder = arrayOf(zoomX, zoomY)
             AnimationManager.applyAnimationsOn(
                 startGame,
@@ -53,20 +56,30 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
+    private fun setUpClickListener() {
+        highScore.setOnClickListener {
+            HighscoreDialog.show(supportFragmentManager)
+        }
+    }
+
     private fun setUpFont() {
         splashTitle.setTypeface(FontManager.getTypeForFont(this, FontManager.Font.SPACE_QUEST_XJ4O))
         startGame.setTypeface(FontManager.getTypeForFont(this, FontManager.Font.SQUIRK))
+        highScore.setTypeface(FontManager.getTypeForFont(this, FontManager.Font.SQUIRK))
     }
 
     private fun applyAnimationOnView() {
         val translateY =
-            PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -FISH_TRANSLATION,
+            PropertyValuesHolder.ofFloat(
+                View.TRANSLATION_Y, -FISH_TRANSLATION,
                 FISH_TRANSLATION
             )
-        val rotate = PropertyValuesHolder.ofFloat(View.ROTATION_Y,
+        val rotate = PropertyValuesHolder.ofFloat(
+            View.ROTATION_Y,
             FISH_ROTATION
         )
-        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA,
+        val alpha = PropertyValuesHolder.ofFloat(
+            View.ALPHA,
             TEXT_MIN_ALPHA,
             TEXT_MAX_ALPH
         )
@@ -108,14 +121,15 @@ class StartActivity : AppCompatActivity() {
     }
 
     fun startGameScreen() {
-        Handler().postDelayed({
-            startActivity(
-                Intent(
-                    this@StartActivity,
-                    GameHostActivity::class.java
+        Handler().postDelayed(
+            {
+                startActivity(
+                    Intent(
+                        this@StartActivity,
+                        GameHostActivity::class.java
+                    )
                 )
-            )
-        },
+            },
             SPLASH_WAIT_TIME
         )
     }

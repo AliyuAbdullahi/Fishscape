@@ -103,9 +103,7 @@ class Player(
 
     override fun imageResource(): Int? = R.drawable.fish1
 
-    fun printDebug() {
-        Console.log("X: ${this.playerX}, Y: ${this.playerY}, width: ${this.playerWidth}, height: ${this.playerHeight}", Console.TextColor.Purple)
-    }
+    fun printDebug() {}
 
     companion object {
         private const val PLAYER_SPEED = 15

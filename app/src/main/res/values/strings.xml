@@ -12,5 +12,8 @@
     <string name="quit_dialog_message">Do you want to quit game?</string>
     <string name="game_over">Game Over</string>
     <string name="new_game">New Game</string>
+    <string name="high_score">High Score</string>
+    <string name="high_scores">HIGH SCORES</string>
     <string name="quit_game">Quit Game</string>
+    <string name="score_value">%1$s</string>
 </resources>

@@ -7,7 +7,7 @@ import android.util.Log
 import com.example.awesomefish.R
 
 class Life(
-    private val lifeContext: Context, var lifeX: Float, var lifeY: Float,
+    private val lifeContext: Context, private var lifeX: Float, private var lifeY: Float,
     foodContainingScreenWidth: Float = 0.0F,
     foodContainingScreenHeight: Float = 0.0F
 ) :
