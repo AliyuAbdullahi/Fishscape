@@ -130,6 +130,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
             val badFood = FoodManager.badFood[index]
 
             if (player.hasEatenFood(badFood)) {
+                player.isHurt = true
                 badFood.foodX = canvas.width + badFood.foodWidth
 
                 soundManager.playShortSound(
