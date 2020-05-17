@@ -20,8 +20,6 @@ abstract class Scene(val context: Context) {
 
     open fun onAttach() {}
 
-    abstract fun isRunning(): Boolean
-
     @ColorRes
     abstract fun backgroundColor(): Int
 
@@ -37,8 +35,6 @@ abstract class Scene(val context: Context) {
     abstract fun onDestroy()
 
     abstract fun onTouch(motionEvent: MotionEvent): Boolean
-    abstract fun stopRunning()
-    abstract fun startRunning()
 
     open fun setLevel(level: GameLevel) {}
 }

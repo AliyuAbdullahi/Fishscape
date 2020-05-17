@@ -75,14 +75,17 @@ class PauseMenu : DialogFragment() {
         private fun instance(): PauseMenu {
             val thePauseMenu = pauseMenu
             if (thePauseMenu != null) {
+                thePauseMenu.isCancelable = false
                 return thePauseMenu
             }
             synchronized(PauseMenu::class) {
                 var possibleNullPauseMenu = pauseMenu
                 return if (possibleNullPauseMenu == null) {
                     possibleNullPauseMenu = PauseMenu()
+                    possibleNullPauseMenu.isCancelable = false
                     possibleNullPauseMenu
                 } else {
+                    possibleNullPauseMenu.isCancelable = false
                     possibleNullPauseMenu
                 }
             }

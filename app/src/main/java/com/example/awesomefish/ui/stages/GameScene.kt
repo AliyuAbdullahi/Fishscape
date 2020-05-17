@@ -36,19 +36,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
 
     private var score = 0
 
-    private var gameRunning: Boolean = true
-
     private val scorePaint = Paint()
-
-    override fun isRunning() = gameRunning
-
-    override fun stopRunning() {
-        gameRunning = false
-    }
-
-    override fun startRunning() {
-        gameRunning = true
-    }
 
     override fun update() {
         player.update()
@@ -198,13 +186,9 @@ class GameScene(context: Context, val soundManager: SoundManager) :
         return true
     }
 
-    override fun onPause() {
-        gameRunning = false
-    }
+    override fun onPause() {}
 
-    override fun onResume() {
-        gameRunning = true
-    }
+    override fun onResume() {}
 
     override fun setLevel(level: GameLevel) {
         this.gameLevel = level

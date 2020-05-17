@@ -8,8 +8,9 @@ import com.example.awesomefish.scene.Scene
 import com.example.awesomefish.scene.SceneManager
 import com.example.awesomefish.shared.SoundManager
 import com.example.awesomefish.ui.stages.GameScene
+import com.example.awesomefish.ui.stages.GameState
 
-class GameLauncher(context: Context, soundManager: SoundManager) : View(context){
+class GameLauncher(context: Context, soundManager: SoundManager) : View(context) {
 
     private var running = true
 
@@ -20,9 +21,7 @@ class GameLauncher(context: Context, soundManager: SoundManager) : View(context)
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        if (SceneManager.get().isRunning()) {
-            SceneManager.get().update()
-        }
+        SceneManager.get().update()
         canvas?.let { theCanvas ->
             SceneManager.get().display(theCanvas)
         }
@@ -33,11 +32,9 @@ class GameLauncher(context: Context, soundManager: SoundManager) : View(context)
     }
 
     fun onPause() {
-        SceneManager.get().stopRunning()
     }
 
     fun onResume() {
-        SceneManager.get().startRunning()
     }
 
     fun onDestroy() {

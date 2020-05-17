@@ -6,9 +6,6 @@ import android.view.MotionEvent
 import com.example.awesomefish.R
 
 abstract class AbstractScene(context: Context) : Scene(context) {
-    override fun isRunning(): Boolean {
-        return true
-    }
 
     override fun backgroundColor(): Int = R.color.colorAccent
 
@@ -23,8 +20,4 @@ abstract class AbstractScene(context: Context) : Scene(context) {
     override fun onDestroy() {}
 
     override fun onTouch(motionEvent: MotionEvent): Boolean = false
-
-    override fun stopRunning() {}
-
-    override fun startRunning() {}
 }

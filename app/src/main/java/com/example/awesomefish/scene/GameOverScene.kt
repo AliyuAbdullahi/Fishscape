@@ -182,10 +182,6 @@ class GameOverScene(context: Context) : AbstractScene(context) {
 
     override fun update() {}
 
-    override fun stopRunning() {
-        // do nothing
-    }
-
     interface GameOverClickListener {
         fun newGameClicked()
         fun quitGameClicked()
