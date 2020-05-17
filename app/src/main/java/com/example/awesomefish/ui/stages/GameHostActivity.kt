@@ -6,9 +6,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.Window
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
 import com.example.awesomefish.scene.GameOverScene
@@ -31,6 +31,7 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
         super.onCreate(savedInstanceState)
         soundManager = SoundManager.instance(this)
         soundManager.stopBackgroundSound()
+
         Handler().postDelayed({
             soundManager.playLongTrack(SoundManager.BackgroundSound.WELCOME_SCREEN)
         }, 100)
@@ -43,7 +44,10 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
         timer.schedule(
             object : TimerTask() {
                 override fun run() {
-                    handler.post { launcher.invalidate() }
+                    Log.v("GAME STATE", "${GameState.running}")
+                    if (GameState.running) {
+                        handler.post { launcher.invalidate() }
+                    }
                 }
             }, 0,
             LOOP_INTERVAL
@@ -52,11 +56,13 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
 
     override fun onPause() {
         super.onPause()
+        GameState.running = false
         soundManager.pauseBackgroundSound()
     }
 
     override fun onResume() {
         super.onResume()
+        GameState.running = true
         soundManager.resume()
         launcher.onResume()
     }
@@ -77,6 +83,7 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     }
 
     override fun onBackPressed() {
+        GameState.running = false
         launcher.onPause()
         showMenuDialog()
     }
@@ -88,6 +95,7 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
 
     override fun resumeClicked() {
         hideMenuDialog()
+        GameState.running = true
     }
 
     override fun aboutClicked() {
@@ -109,8 +117,8 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(true)
         dialog.show()
-        val positiveBtn:Button = dialog.findViewById(R.id.quit_positive_button)
-        val negativeBtn:Button = dialog.findViewById(R.id.quit_negative__button)
+        val positiveBtn: Button = dialog.findViewById(R.id.quit_positive_button)
+        val negativeBtn: Button = dialog.findViewById(R.id.quit_negative__button)
         positiveBtn.setOnClickListener {
             finish()
             exitProcess(0)
