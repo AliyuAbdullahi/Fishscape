@@ -18,4 +18,5 @@
     <string name="score_value">%1$s</string>
     <string name="main_menu">"Main Menu"</string>
     <string name="quit_game_confirm_text">Do you want to quit game?</string>
+    <string name="empty_text">you don\'t have any score yet,\nget in the game\nand win for some scores</string>
 </resources>

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,7 @@ private const val HIGH_SCORE_TAG = "highScore"
 class HighscoreDialog : DialogFragment() {
 
     private val repository = DI.provideScoreRepository()
+    lateinit var  emptyText: TextView
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog: Dialog = super.onCreateDialog(savedInstanceState)
@@ -41,21 +43,38 @@ class HighscoreDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.highscores, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        emptyText = view.findViewById(R.id.empty_text)
         GlobalScope.launch {
             withContext(Dispatchers.Main) {
-                highScoreList.apply {
-                    layoutManager = LinearLayoutManager(context)
-                    adapter = HighscoreListAdapter(
-                        repository.getAll().sortedBy { it.scoreValue }
-                            .reversed().toMutableList())
+                val scores =
+                    repository.getAll().sortedBy { it.scoreValue }
+                        .reversed().toMutableList()
+                if (scores.isEmpty()){
+                    showEmptyState()
+                }else{
+                    hideEmptyState()
+                    highScoreList.apply {
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = HighscoreListAdapter(scores)
                 }
+
             }
         }
+    }
+    }
+
+    private fun showEmptyState(){
+        emptyText.visibility = View.VISIBLE
+    }
+
+    private fun hideEmptyState(){
+        emptyText.visibility = View.INVISIBLE
     }
 
     companion object {

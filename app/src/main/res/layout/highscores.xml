@@ -50,6 +50,16 @@
             android:background="@color/colorLighGrey"
             />
 
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:text="@string/empty_text"
+            android:textSize="@dimen/fontSize18"
+            android:layout_centerInParent="true"
+            android:textAlignment="center"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/highScoreList"
             android:layout_width="match_parent"
@@ -63,5 +73,7 @@
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
+
+
 
 
