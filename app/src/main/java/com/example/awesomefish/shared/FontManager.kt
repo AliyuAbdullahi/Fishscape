@@ -20,6 +20,8 @@ object FontManager {
         SQUIRK("fonts/Squirk-RMvV.ttf")
     }
 
+
+
     object FontSize {
         const val VERY_SMALL = 30F
         const val SMALL = 50F

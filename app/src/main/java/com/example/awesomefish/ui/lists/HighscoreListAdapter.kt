@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.awesomefish.R
-import com.example.awesomefish.data.Score
+import com.example.awesomefish.domain.data.Score
 import kotlinx.android.synthetic.main.high_score_item.view.*
 
 class HighscoreListAdapter(

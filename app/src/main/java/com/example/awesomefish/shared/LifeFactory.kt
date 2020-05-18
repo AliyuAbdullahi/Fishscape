@@ -1,8 +1,7 @@
 package com.example.awesomefish.shared
 
 import android.content.Context
-import android.util.Log
-import com.example.awesomefish.entities.Life
+import com.example.awesomefish.domain.entities.Life
 
 object LifeFactory {
 
