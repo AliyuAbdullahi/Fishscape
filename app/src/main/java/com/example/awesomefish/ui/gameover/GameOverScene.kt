@@ -49,6 +49,7 @@ class GameOverScene(context: Context) : AbstractScene(context) {
     override fun onAttach() {
         try {
             gameOverClickedListener = context as GameOverClickListener
+            Log.d("SCREEN SIZE", "${ViewManager.width}")
         } catch (error: Throwable) {
             Log.e("ERROR", "Context should implement GameOverClickListener")
         }
@@ -64,7 +65,7 @@ class GameOverScene(context: Context) : AbstractScene(context) {
 
         newGamePaint.apply {
             typeface = FontManager.getTypeForFont(context, FontManager.Font.GLADIATOR_SPORT)
-            textSize = FontManager.FontSize.MEDIUM
+            textSize = FontManager.FontSize.BIG
             color = Color.YELLOW
         }
 
@@ -85,15 +86,15 @@ class GameOverScene(context: Context) : AbstractScene(context) {
         scoreTextY = (30.toFloat() percent of number canvas.height.toFloat()).toInt()
 
         newGameTextX =
-            ((canvas.width / 2) - (newGameText.length * FontManager.FontSize.MEDIUM) / 2).toInt()
+            ((canvas.width / 2) - (newGameText.length * FontManager.FontSize.BIG) / 2).toInt()
         newGameTextY = (45.toFloat() percent of number canvas.height.toFloat()).toInt()
 
         quitGameTextX =
-            ((canvas.width / 2) - (quitGameText.length * FontManager.FontSize.MEDIUM) / 2).toInt()
+            ((canvas.width / 2) - (quitGameText.length * FontManager.FontSize.BIG) / 2).toInt()
         quitGameTextY = (60.toFloat() percent of number canvas.height.toFloat()).toInt()
 
         mainMenuX =
-            ((canvas.width / 2) - (mainMenuText.length * FontManager.FontSize.MEDIUM) / 2).toInt()
+            ((canvas.width / 2) - (mainMenuText.length * FontManager.FontSize.BIG) / 2).toInt()
         mainMenuY = (75.toFloat() percent of number canvas.height.toFloat()).toInt()
 
 
@@ -146,7 +147,7 @@ class GameOverScene(context: Context) : AbstractScene(context) {
                 newGameText.rect(
                     newGameTextX - 150,
                     newGameTextY,
-                    FontManager.FontSize.MEDIUM.toInt()
+                    FontManager.FontSize.BIG.toInt()
                 ).contains(
                     xCoord.toInt(),
                     yCoord.toInt()
@@ -159,14 +160,14 @@ class GameOverScene(context: Context) : AbstractScene(context) {
                 mainMenuText.rect(
                     mainMenuX - 150,
                     mainMenuY,
-                    FontManager.FontSize.MEDIUM.toInt()
+                    FontManager.FontSize.BIG.toInt()
                 ).contains(xCoord.toInt(), yCoord.toInt()) -> {
                     gameOverClickedListener.mainMenuClicked()
                 }
                 quitGameText.rect(
                     quitGameTextX - 150,
                     quitGameTextY,
-                    FontManager.FontSize.MEDIUM.toInt()
+                    FontManager.FontSize.BIG.toInt()
                 ).contains(
                     xCoord.toInt(),
                     yCoord.toInt()

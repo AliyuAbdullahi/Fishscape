@@ -20,13 +20,70 @@ object FontManager {
         SQUIRK("fonts/Squirk-RMvV.ttf")
     }
 
-
-
     object FontSize {
-        const val VERY_SMALL = 30F
-        const val SMALL = 50F
-        const val MEDIUM = 70F
-        const val LARGE = 100F
-        const val VERY_LARGE = 120F
+        val VERY_SMALL = FontDesnsity.SMALL().toFloat()
+        val SMALL = FontDesnsity.SMALL().toFloat()
+        val MEDIUM = FontDesnsity.MEDIUM().toFloat()
+        val LARGE = FontDesnsity.LARGE().toFloat()
+        val VERY_LARGE = FontDesnsity.VERY_LARGE().toFloat()
+        val BIG = FontDesnsity.BIG().toFloat()
+
+    }
+
+    object FontBaseSize {
+        const val SMALL = 10
+        const val MEDIUM = 17
+        const val BIG = 25
+        const val LARGE = 33
+        const val VERY_LARGE = 40
+    }
+
+    object FontMultipyer {
+        const val SMALL = 1
+        const val MEDIUM = 1.5
+        const val LARGE = 3
+        const val VERY_LARGE = 4.5
+    }
+
+    object FontDesnsity {
+        fun SMALL(): Int = when (getSize(ViewManager.width)) {
+            ScreenSize.Small -> (FontBaseSize.SMALL * FontMultipyer.SMALL)
+            ScreenSize.Medium -> (FontBaseSize.SMALL * FontMultipyer.MEDIUM).toInt()
+            ScreenSize.Large -> (FontBaseSize.SMALL * FontMultipyer.LARGE)
+            ScreenSize.VeryLarge -> (FontBaseSize.SMALL * FontMultipyer.VERY_LARGE).toInt()
+            else -> 0
+        }
+
+        fun MEDIUM(): Int = when (getSize(ViewManager.width)) {
+            ScreenSize.Small -> (FontBaseSize.MEDIUM * FontMultipyer.SMALL).toInt()
+            ScreenSize.Medium -> (FontBaseSize.MEDIUM * FontMultipyer.MEDIUM).toInt()
+            ScreenSize.Large -> (FontBaseSize.MEDIUM * FontMultipyer.LARGE).toInt()
+            ScreenSize.VeryLarge -> (FontBaseSize.MEDIUM * FontMultipyer.VERY_LARGE).toInt()
+            else -> 0
+        }
+
+        fun LARGE(): Int = when (getSize(ViewManager.width)) {
+            ScreenSize.Small -> (FontBaseSize.VERY_LARGE * FontMultipyer.SMALL).toInt()
+            ScreenSize.Medium -> (FontBaseSize.VERY_LARGE * FontMultipyer.MEDIUM).toInt()
+            ScreenSize.Large -> (FontBaseSize.VERY_LARGE * FontMultipyer.LARGE).toInt()
+            ScreenSize.VeryLarge -> (FontBaseSize.VERY_LARGE * FontMultipyer.VERY_LARGE).toInt()
+            else -> 0
+        }
+
+        fun BIG(): Int = when (getSize(ViewManager.width)) {
+            ScreenSize.Small -> (FontBaseSize.BIG * FontMultipyer.SMALL)
+            ScreenSize.Medium -> (FontBaseSize.BIG * FontMultipyer.MEDIUM).toInt()
+            ScreenSize.Large -> (FontBaseSize.BIG * FontMultipyer.LARGE)
+            ScreenSize.VeryLarge -> (FontBaseSize.BIG * FontMultipyer.VERY_LARGE).toInt()
+            else -> 0
+        }
+
+        fun VERY_LARGE(): Int = when (getSize(ViewManager.width)) {
+            ScreenSize.Small -> (FontBaseSize.LARGE * FontMultipyer.SMALL)
+            ScreenSize.Medium -> (FontBaseSize.LARGE * FontMultipyer.MEDIUM).toInt()
+            ScreenSize.Large -> (FontBaseSize.LARGE * FontMultipyer.LARGE)
+            ScreenSize.VeryLarge -> (FontBaseSize.LARGE * FontMultipyer.VERY_LARGE).toInt()
+            else -> 0
+        }
     }
 }
