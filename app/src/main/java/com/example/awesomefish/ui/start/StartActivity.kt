@@ -5,22 +5,17 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.DisplayMetrics
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
-import com.example.awesomefish.data.LocalStorageManager
-import com.example.awesomefish.shared.AnimationManager
-import com.example.awesomefish.shared.FontManager
-import com.example.awesomefish.shared.SoundManager
+import com.example.awesomefish.domain.data.LocalStorageManager
+import com.example.awesomefish.shared.*
 import com.example.awesomefish.ui.dialogs.HighscoreDialog
-import com.example.awesomefish.ui.stages.GameHostActivity
+import com.example.awesomefish.ui.scene.GameHostActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
 
 class StartActivity : AppCompatActivity() {
-
 
     private lateinit var soundManager: SoundManager
 
@@ -33,9 +28,13 @@ class StartActivity : AppCompatActivity() {
         applyAnimationOnView()
         processStartGame()
         setUpClickListener()
+        setScreenWidthAndHeight()
     }
 
-
+    private fun setScreenWidthAndHeight() {
+        ViewManager.width = screenDimension().first
+        ViewManager.height = screenDimension().second
+    }
 
     private fun processStartGame() {
         startGame.setOnClickListener {

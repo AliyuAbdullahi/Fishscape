@@ -1,6 +1,6 @@
 package com.example.awesomefish.shared
 
-import com.example.awesomefish.entities.Life
+import com.example.awesomefish.domain.entities.Life
 
 object LifeManager {
 

@@ -1,6 +1,6 @@
 package com.example.awesomefish.shared
 
-import com.example.awesomefish.data.Score
+import com.example.awesomefish.domain.data.Score
 
 object ScoreManager {
 

@@ -4,11 +4,10 @@ import android.content.Context
 import android.graphics.Canvas
 import android.view.MotionEvent
 import android.view.View
-import com.example.awesomefish.scene.Scene
-import com.example.awesomefish.scene.SceneManager
+import com.example.awesomefish.domain.scenebase.Scene
+import com.example.awesomefish.domain.scenebase.SceneManager
 import com.example.awesomefish.shared.SoundManager
-import com.example.awesomefish.ui.stages.GameScene
-import com.example.awesomefish.ui.stages.GameState
+import com.example.awesomefish.ui.scene.GameScene
 
 class GameLauncher(context: Context, soundManager: SoundManager) : View(context) {
 

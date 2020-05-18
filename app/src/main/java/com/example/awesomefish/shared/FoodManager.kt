@@ -1,7 +1,7 @@
 package com.example.awesomefish.shared
 
 import android.content.Context
-import com.example.awesomefish.entities.Food
+import com.example.awesomefish.domain.entities.Food
 import java.util.*
 import kotlin.random.Random
 
