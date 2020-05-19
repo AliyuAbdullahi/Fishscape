@@ -55,8 +55,8 @@ class GameScene(context: Context, val soundManager: SoundManager) :
     init {
         scorePaint.isAntiAlias = true
         scorePaint.color = Color.GREEN
-        scorePaint.typeface = FontManager.getTypeForFont(context, FontManager.Font.SQUIRK)
-        scorePaint.textSize = FontManager.FontSize.MEDIUM
+        scorePaint.typeface = FontManager.getTypeForFont(context, FontManager.Font.SPACE_QUEST_XJ4O)
+        scorePaint.textSize = FontManager.FontSize.BIG
     }
 
     override fun display(canvas: Canvas) {

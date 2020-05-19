@@ -31,9 +31,9 @@ object FontManager {
     }
 
     object FontBaseSize {
-        const val SMALL = 10
+        const val SMALL = 12
         const val MEDIUM = 17
-        const val BIG = 25
+        const val BIG = 22
         const val LARGE = 33
         const val VERY_LARGE = 40
     }
