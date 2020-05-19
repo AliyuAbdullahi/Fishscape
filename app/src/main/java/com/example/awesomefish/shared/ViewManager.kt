@@ -14,5 +14,25 @@ object ViewManager {
     var height: Int = 0
 }
 
+enum class ScreenSize(val width: Int, val height: Int) {
+    Unknown(0, 0),
+    Small(400, 700),
+    Medium(800, 1400),
+    Large(1500, 2800),
+    VeryLarge(2900, 5600);
+}
+
+fun getSize(size: Int): ScreenSize {
+    val all = listOf(
+        ScreenSize.Unknown,
+        ScreenSize.Small,
+        ScreenSize.Medium,
+        ScreenSize.Large,
+        ScreenSize.VeryLarge
+    )
+
+    return all.first { it.width >= size }
+}
+
 typealias WidthHeightPair<A, B> = Pair<A, B>
 

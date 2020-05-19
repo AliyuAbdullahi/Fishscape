@@ -49,6 +49,7 @@ class GameOverScene(context: Context) : AbstractScene(context) {
     override fun onAttach() {
         try {
             gameOverClickedListener = context as GameOverClickListener
+            Log.d("SCREEN SIZE", "${ViewManager.width}")
         } catch (error: Throwable) {
             Log.e("ERROR", "Context should implement GameOverClickListener")
         }
@@ -57,19 +58,19 @@ class GameOverScene(context: Context) : AbstractScene(context) {
     init {
         onAttach()
         gameOverPaint.apply {
-            typeface = FontManager.getTypeForFont(context, FontManager.Font.GLADIATOR_SPORT)
+            typeface = FontManager.getTypeForFont(context, FontManager.Font.SPACE_QUEST_XJ4O)
             textSize = FontManager.FontSize.LARGE
             color = Color.RED
         }
 
         newGamePaint.apply {
-            typeface = FontManager.getTypeForFont(context, FontManager.Font.GLADIATOR_SPORT)
-            textSize = FontManager.FontSize.MEDIUM
+            typeface = FontManager.getTypeForFont(context, FontManager.Font.SPACE_QUEST_XJ4O)
+            textSize = FontManager.FontSize.BIG
             color = Color.YELLOW
         }
 
         scorePaint.apply {
-            typeface = FontManager.getTypeForFont(context, FontManager.Font.GLADIATOR_SPORT)
+            typeface = FontManager.getTypeForFont(context, FontManager.Font.SPACE_QUEST_XJ4O)
             textSize = FontManager.FontSize.LARGE
             color = Color.BLUE
         }
@@ -77,23 +78,23 @@ class GameOverScene(context: Context) : AbstractScene(context) {
 
     override fun display(canvas: Canvas) {
         gameOverTextX =
-            ((canvas.width / 2) - (gameOverText.length * FontManager.FontSize.LARGE) / 2).toInt()
+            ((canvas.width / 2) - (gameOverText.length * FontManager.FontSize.LARGE) / 3).toInt()
         gameOverTextY = (15.toFloat() percent of number canvas.height.toFloat()).toInt()
 
         scoreTextX =
-            ((canvas.width / 2) - ((SCORE_NAME.length + scoreText.toString().length - 1) * FontManager.FontSize.LARGE) / 2).toInt()
+            ((canvas.width / 2) - ((SCORE_NAME.length + scoreText.toString().length - 1) * FontManager.FontSize.LARGE) / 3).toInt()
         scoreTextY = (30.toFloat() percent of number canvas.height.toFloat()).toInt()
 
         newGameTextX =
-            ((canvas.width / 2) - (newGameText.length * FontManager.FontSize.MEDIUM) / 2).toInt()
+            ((canvas.width / 2) - (newGameText.length * FontManager.FontSize.BIG) / 3).toInt()
         newGameTextY = (45.toFloat() percent of number canvas.height.toFloat()).toInt()
 
         quitGameTextX =
-            ((canvas.width / 2) - (quitGameText.length * FontManager.FontSize.MEDIUM) / 2).toInt()
+            ((canvas.width / 2) - (quitGameText.length * FontManager.FontSize.BIG) / 3).toInt()
         quitGameTextY = (60.toFloat() percent of number canvas.height.toFloat()).toInt()
 
         mainMenuX =
-            ((canvas.width / 2) - (mainMenuText.length * FontManager.FontSize.MEDIUM) / 2).toInt()
+            ((canvas.width / 2) - (mainMenuText.length * FontManager.FontSize.BIG) / 3).toInt()
         mainMenuY = (75.toFloat() percent of number canvas.height.toFloat()).toInt()
 
 
@@ -146,7 +147,7 @@ class GameOverScene(context: Context) : AbstractScene(context) {
                 newGameText.rect(
                     newGameTextX - 150,
                     newGameTextY,
-                    FontManager.FontSize.MEDIUM.toInt()
+                    FontManager.FontSize.BIG.toInt()
                 ).contains(
                     xCoord.toInt(),
                     yCoord.toInt()
@@ -159,14 +160,14 @@ class GameOverScene(context: Context) : AbstractScene(context) {
                 mainMenuText.rect(
                     mainMenuX - 150,
                     mainMenuY,
-                    FontManager.FontSize.MEDIUM.toInt()
+                    FontManager.FontSize.BIG.toInt()
                 ).contains(xCoord.toInt(), yCoord.toInt()) -> {
                     gameOverClickedListener.mainMenuClicked()
                 }
                 quitGameText.rect(
                     quitGameTextX - 150,
                     quitGameTextY,
-                    FontManager.FontSize.MEDIUM.toInt()
+                    FontManager.FontSize.BIG.toInt()
                 ).contains(
                     xCoord.toInt(),
                     yCoord.toInt()
