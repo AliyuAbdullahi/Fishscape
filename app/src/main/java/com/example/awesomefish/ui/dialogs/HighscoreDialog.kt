@@ -43,7 +43,6 @@ class HighscoreDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.highscores, container, false)
     }
 
