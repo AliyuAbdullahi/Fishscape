@@ -129,8 +129,6 @@ class GameScene(context: Context, val soundManager: SoundManager) :
                 )
 
                 player.reduceLife(1)
-
-                println("eaten bad food ${badFoodCount++}")
             }
         }
     }
