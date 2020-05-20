@@ -7,15 +7,15 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.MotionEvent
 import com.example.awesomefish.R
+import com.example.awesomefish.di.DI
 import com.example.awesomefish.domain.data.GameLevel
 import com.example.awesomefish.domain.data.Score
-import com.example.awesomefish.di.DI
 import com.example.awesomefish.domain.entities.Food
 import com.example.awesomefish.domain.entities.Player
-import com.example.awesomefish.ui.gameover.GameOverScene
 import com.example.awesomefish.domain.scenebase.Scene
 import com.example.awesomefish.shared.*
 import com.example.awesomefish.ui.GameLauncher
+import com.example.awesomefish.ui.gameover.GameOverScene
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -31,9 +31,8 @@ class GameScene(context: Context, val soundManager: SoundManager) :
     private val foods =
         FoodManager.createMuiltpleFood(context, gameLevel.enemyCount, FOOD_RESERVOIR_SIZE)
 
-    val badFood = FoodManager.loadBadFood(context, 4)
-
-
+    val badFood = FoodManager.loadBadFood(context, BAD_FOOD_SIZE)
+    
     private var score = 0
 
     private val scorePaint = Paint()
@@ -223,6 +222,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
         const val FOOD_X_OFFSET = 50F
 
         const val FOOD_SIZE = 6
+        const val BAD_FOOD_SIZE = 4
         const val FOOD_RESERVOIR_SIZE = 12
     }
 }
