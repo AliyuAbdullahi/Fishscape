@@ -101,7 +101,6 @@ class GameScene(context: Context, val soundManager: SoundManager) :
     }
 
     private fun checkForCollision(canvas: Canvas) {
-        println("FOOD SIZE ${FoodManager.size()}")
         for (index in 0 until FoodManager.foods.size) {
             if (index < FoodManager.foods.size && player.hasEatenFood(FoodManager.foods[index])) {
                 soundManager.playShortSound(
