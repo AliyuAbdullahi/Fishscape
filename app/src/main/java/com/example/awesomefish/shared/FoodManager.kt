@@ -31,6 +31,7 @@ object FoodManager {
         val foodStartY = 300
         val foodEndY = 920
         var offset = 300
+
         for (i in 1..range) {
             badFood.add(
                 Food(
@@ -55,9 +56,8 @@ object FoodManager {
     }
 
     fun removeFood(food: Food): Boolean {
-        val removed = foods.remove(food)
         removeFromReservoir()
-        return removed
+        return foods.remove(food)
     }
 
     private fun removeFromReservoir() {

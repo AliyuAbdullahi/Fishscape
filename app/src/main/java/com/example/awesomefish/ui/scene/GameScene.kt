@@ -32,7 +32,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
         FoodManager.createMuiltpleFood(context, gameLevel.enemyCount, FOOD_RESERVOIR_SIZE)
 
     val badFood = FoodManager.loadBadFood(context, BAD_FOOD_SIZE)
-    
+
     private var score = 0
 
     private val scorePaint = Paint()
@@ -82,7 +82,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
         }
     }
 
-    fun saveScore(score: Int) {
+    private fun saveScore(score: Int) {
         GlobalScope.launch {
             scoreRepo.saveData(Score(score, System.currentTimeMillis()))
         }
@@ -102,8 +102,8 @@ class GameScene(context: Context, val soundManager: SoundManager) :
 
     private fun checkForCollision(canvas: Canvas) {
         println("FOOD SIZE ${FoodManager.size()}")
-        for (index in 0 until FoodManager.size() - 1) {
-            if (player.hasEatenFood(FoodManager.foods[index])) {
+        for (index in 0 until FoodManager.foods.size) {
+            if (index < FoodManager.foods.size && player.hasEatenFood(FoodManager.foods[index])) {
                 soundManager.playShortSound(
                     SoundManager.ShortSound.CLICK,
                     SoundManager.Loop.DONT_LOOP
