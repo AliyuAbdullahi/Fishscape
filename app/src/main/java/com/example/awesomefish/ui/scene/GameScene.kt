@@ -7,15 +7,15 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.MotionEvent
 import com.example.awesomefish.R
+import com.example.awesomefish.di.DI
 import com.example.awesomefish.domain.data.GameLevel
 import com.example.awesomefish.domain.data.Score
-import com.example.awesomefish.di.DI
 import com.example.awesomefish.domain.entities.Food
 import com.example.awesomefish.domain.entities.Player
-import com.example.awesomefish.ui.gameover.GameOverScene
 import com.example.awesomefish.domain.scenebase.Scene
 import com.example.awesomefish.shared.*
 import com.example.awesomefish.ui.GameLauncher
+import com.example.awesomefish.ui.gameover.GameOverScene
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -31,8 +31,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
     private val foods =
         FoodManager.createMuiltpleFood(context, gameLevel.enemyCount, FOOD_RESERVOIR_SIZE)
 
-    val badFood = FoodManager.loadBadFood(context, 4)
-
+    val badFood = FoodManager.loadBadFood(context, BAD_FOOD_SIZE)
 
     private var score = 0
 
@@ -83,7 +82,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
         }
     }
 
-    fun saveScore(score: Int) {
+    private fun saveScore(score: Int) {
         GlobalScope.launch {
             scoreRepo.saveData(Score(score, System.currentTimeMillis()))
         }
@@ -102,9 +101,8 @@ class GameScene(context: Context, val soundManager: SoundManager) :
     }
 
     private fun checkForCollision(canvas: Canvas) {
-        println("FOOD SIZE ${FoodManager.size()}")
-        for (index in 0 until FoodManager.size() - 1) {
-            if (player.hasEatenFood(FoodManager.foods[index])) {
+        for (index in 0 until FoodManager.foods.size) {
+            if (index < FoodManager.foods.size && player.hasEatenFood(FoodManager.foods[index])) {
                 soundManager.playShortSound(
                     SoundManager.ShortSound.CLICK,
                     SoundManager.Loop.DONT_LOOP
@@ -131,8 +129,6 @@ class GameScene(context: Context, val soundManager: SoundManager) :
                 )
 
                 player.reduceLife(1)
-
-                println("eaten bad food ${badFoodCount++}")
             }
         }
     }
@@ -223,6 +219,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
         const val FOOD_X_OFFSET = 50F
 
         const val FOOD_SIZE = 6
+        const val BAD_FOOD_SIZE = 4
         const val FOOD_RESERVOIR_SIZE = 12
     }
 }

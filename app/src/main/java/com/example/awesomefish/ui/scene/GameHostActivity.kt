@@ -11,13 +11,17 @@ import android.view.Window
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
-import com.example.awesomefish.ui.gameover.GameOverScene
+import com.example.awesomefish.di.DI
+import com.example.awesomefish.domain.data.GameStatus
 import com.example.awesomefish.shared.FoodManager
 import com.example.awesomefish.shared.SoundManager
 import com.example.awesomefish.ui.GameLauncher
+import com.example.awesomefish.ui.gameover.GameOverScene
 import com.example.awesomefish.ui.menu.PAUSE_MENU_TAG
 import com.example.awesomefish.ui.menu.PauseMenu
 import com.example.awesomefish.ui.start.StartActivity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -25,13 +29,15 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     GameOverScene.GameOverClickListener {
     private lateinit var launcher: GameLauncher
     private lateinit var soundManager: SoundManager
+    private val gameStatusDao = DI.provideGameStatusDao()
 
     private var handler = Handler()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         soundManager = SoundManager.instance(this)
         soundManager.stopBackgroundSound()
-
+        gameUnPaused()
         Handler().postDelayed({
             soundManager.playLongTrack(SoundManager.BackgroundSound.WELCOME_SCREEN)
         }, 100)
@@ -56,13 +62,16 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
 
     override fun onPause() {
         super.onPause()
-        GameState.running = false
         soundManager.pauseBackgroundSound()
     }
 
     override fun onResume() {
         super.onResume()
-        GameState.running = true
+
+        GlobalScope.launch {
+            GameState.running = gameStatusDao.getGameStatus().first().paused.not()
+        }
+
         soundManager.resume()
         launcher.onResume()
     }
@@ -85,12 +94,26 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     override fun onBackPressed() {
         GameState.running = false
         launcher.onPause()
+        saveGamePaused()
         showMenuDialog()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         launcher.onDestroy()
+        gameUnPaused()
+    }
+
+    private fun saveGamePaused() {
+        GlobalScope.launch {
+            gameStatusDao.saveGameStatus(GameStatus(1, true))
+        }
+    }
+
+    private fun gameUnPaused() {
+        GlobalScope.launch {
+            gameStatusDao.saveGameStatus(GameStatus(1, false))
+        }
     }
 
     override fun resumeClicked() {
