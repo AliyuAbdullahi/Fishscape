@@ -14,6 +14,10 @@ object ViewManager {
     var height: Int = 0
 }
 
+object FoodSize {
+
+}
+
 enum class ScreenSize(val width: Int, val height: Int) {
     Unknown(0, 0),
     Small(400, 700),
@@ -22,7 +26,7 @@ enum class ScreenSize(val width: Int, val height: Int) {
     VeryLarge(2900, 5600);
 }
 
-fun getSize(size: Int): ScreenSize {
+fun getDeviceWidth(size: Int): ScreenSize {
     val all = listOf(
         ScreenSize.Unknown,
         ScreenSize.Small,

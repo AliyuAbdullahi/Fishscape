@@ -46,7 +46,7 @@ object FontManager {
     }
 
     object FontDesnsity {
-        fun SMALL(): Int = when (getSize(ViewManager.width)) {
+        fun SMALL(): Int = when (getDeviceWidth(ViewManager.width)) {
             ScreenSize.Small -> (FontBaseSize.SMALL * FontMultipyer.SMALL)
             ScreenSize.Medium -> (FontBaseSize.SMALL * FontMultipyer.MEDIUM).toInt()
             ScreenSize.Large -> (FontBaseSize.SMALL * FontMultipyer.LARGE)
@@ -54,7 +54,7 @@ object FontManager {
             else -> 0
         }
 
-        fun MEDIUM(): Int = when (getSize(ViewManager.width)) {
+        fun MEDIUM(): Int = when (getDeviceWidth(ViewManager.width)) {
             ScreenSize.Small -> (FontBaseSize.MEDIUM * FontMultipyer.SMALL).toInt()
             ScreenSize.Medium -> (FontBaseSize.MEDIUM * FontMultipyer.MEDIUM).toInt()
             ScreenSize.Large -> (FontBaseSize.MEDIUM * FontMultipyer.LARGE).toInt()
@@ -62,7 +62,7 @@ object FontManager {
             else -> 0
         }
 
-        fun LARGE(): Int = when (getSize(ViewManager.width)) {
+        fun LARGE(): Int = when (getDeviceWidth(ViewManager.width)) {
             ScreenSize.Small -> (FontBaseSize.VERY_LARGE * FontMultipyer.SMALL).toInt()
             ScreenSize.Medium -> (FontBaseSize.VERY_LARGE * FontMultipyer.MEDIUM).toInt()
             ScreenSize.Large -> (FontBaseSize.VERY_LARGE * FontMultipyer.LARGE).toInt()
@@ -70,7 +70,7 @@ object FontManager {
             else -> 0
         }
 
-        fun BIG(): Int = when (getSize(ViewManager.width)) {
+        fun BIG(): Int = when (getDeviceWidth(ViewManager.width)) {
             ScreenSize.Small -> (FontBaseSize.BIG * FontMultipyer.SMALL)
             ScreenSize.Medium -> (FontBaseSize.BIG * FontMultipyer.MEDIUM).toInt()
             ScreenSize.Large -> (FontBaseSize.BIG * FontMultipyer.LARGE)
@@ -78,7 +78,7 @@ object FontManager {
             else -> 0
         }
 
-        fun VERY_LARGE(): Int = when (getSize(ViewManager.width)) {
+        fun VERY_LARGE(): Int = when (getDeviceWidth(ViewManager.width)) {
             ScreenSize.Small -> (FontBaseSize.LARGE * FontMultipyer.SMALL)
             ScreenSize.Medium -> (FontBaseSize.LARGE * FontMultipyer.MEDIUM).toInt()
             ScreenSize.Large -> (FontBaseSize.LARGE * FontMultipyer.LARGE)

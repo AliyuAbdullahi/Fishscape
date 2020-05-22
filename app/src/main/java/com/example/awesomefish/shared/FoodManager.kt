@@ -140,3 +140,11 @@ object FoodManager {
 }
 
 fun rand(s: Int, e: Int) = Random.nextInt(s, e + 1)
+
+fun foodRadius(): Int = when (getDeviceWidth(ViewManager.width)) {
+    ScreenSize.Small -> 10
+    ScreenSize.Medium -> 20
+    ScreenSize.Large -> 30
+    ScreenSize.VeryLarge -> 40
+    ScreenSize.Unknown -> 15
+}
