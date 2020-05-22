@@ -22,7 +22,7 @@ enum class ScreenSize(val width: Int, val height: Int) {
     VeryLarge(2900, 5600);
 }
 
-fun getSize(size: Int): ScreenSize {
+fun getDeviceWidth(size: Int): ScreenSize {
     val all = listOf(
         ScreenSize.Unknown,
         ScreenSize.Small,

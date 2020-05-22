@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import com.example.awesomefish.shared.foodRadius
 import com.example.awesomefish.shared.rand
 
 const val MIN_Y = 200
@@ -16,15 +17,19 @@ class Food(
     var foodX: Float,
     var foodY: Float,
     var maxY: Int = 0,
-    val foodWidth: Float = FOOD_RADIUS,
-    val foodHeight: Float = FOOD_RADIUS
+    var foodWidth: Float = 0F,
+    var foodHeight: Float = 0F
 ) :
     Entity(context, foodX, foodY, 0F, 0F, foodWidth, foodHeight) {
     private val paint = Paint()
 
     private var prevY = foodY
 
+    private val foodRadius = foodRadius()
+
     init {
+        foodWidth = foodRadius.toFloat()
+        foodHeight = foodRadius.toFloat()
         if (type == Type.EDIBLE) {
             paint.color = Color.YELLOW
         } else {
@@ -53,7 +58,7 @@ class Food(
     }
 
     override fun draw(canvas: Canvas) {
-        canvas.drawCircle(foodX, foodY, FOOD_RADIUS, paint)
+        canvas.drawCircle(foodX, foodY, foodRadius.toFloat(), paint)
     }
 
     override fun imageResource(): Int? {
