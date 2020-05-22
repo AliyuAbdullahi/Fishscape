@@ -17,8 +17,8 @@ class Food(
     var foodX: Float,
     var foodY: Float,
     var maxY: Int = 0,
-    val foodWidth: Float = FOOD_RADIUS,
-    val foodHeight: Float = FOOD_RADIUS
+    var foodWidth: Float = 0F,
+    var foodHeight: Float = 0F
 ) :
     Entity(context, foodX, foodY, 0F, 0F, foodWidth, foodHeight) {
     private val paint = Paint()
@@ -28,6 +28,8 @@ class Food(
     private val foodRadius = foodRadius()
 
     init {
+        foodWidth = foodRadius.toFloat()
+        foodHeight = foodRadius.toFloat()
         if (type == Type.EDIBLE) {
             paint.color = Color.YELLOW
         } else {

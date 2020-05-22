@@ -14,10 +14,6 @@ object ViewManager {
     var height: Int = 0
 }
 
-object FoodSize {
-
-}
-
 enum class ScreenSize(val width: Int, val height: Int) {
     Unknown(0, 0),
     Small(400, 700),
