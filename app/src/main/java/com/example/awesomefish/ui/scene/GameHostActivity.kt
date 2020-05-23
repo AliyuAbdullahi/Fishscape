@@ -168,6 +168,8 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
 
     override fun newGameClicked() {
         FoodManager.clearAll()
+        soundManager.stopBackgroundSound()
+        soundManager.playLongTrack(SoundManager.BackgroundSound.WELCOME_SCREEN)
         GameLauncher.addScene(GameScene(this, soundManager))
     }
 

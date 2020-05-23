@@ -98,14 +98,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
         super.display(canvas)
         when {
             player.isDead() -> {
-                ScoreManager.setTheScore(Score(score, System.currentTimeMillis()))
-                saveScore(score)
-                FoodManager.clearAll()
-                GameLauncher.addScene(
-                    GameOverScene(
-                        context
-                    )
-                )
+                showGameOver()
             }
             else -> {
                 setFoodPosition(canvas)
@@ -116,6 +109,19 @@ class GameScene(context: Context, val soundManager: SoundManager) :
                 drawLife(canvas)
             }
         }
+    }
+
+    private fun showGameOver() {
+        ScoreManager.setTheScore(Score(score, System.currentTimeMillis()))
+        saveScore(score)
+        FoodManager.clearAll()
+        soundManager.stopBackgroundSound()
+        soundManager.playLongTrack(SoundManager.BackgroundSound.GAME_OVER)
+        GameLauncher.addScene(
+            GameOverScene(
+                context
+            )
+        )
     }
 
     private fun saveScore(score: Int) {
