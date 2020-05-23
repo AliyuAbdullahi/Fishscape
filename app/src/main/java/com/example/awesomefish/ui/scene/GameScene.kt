@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import com.example.awesomefish.R
 import com.example.awesomefish.di.DI
 import com.example.awesomefish.domain.data.GameLevel
+import com.example.awesomefish.domain.data.GameStage
 import com.example.awesomefish.domain.data.Score
 import com.example.awesomefish.domain.entities.Food
 import com.example.awesomefish.domain.entities.Player
@@ -29,13 +30,15 @@ class GameScene(context: Context, val soundManager: SoundManager) :
     private var player: Player = Player(context, 0F, 0F, 0F, 0F)
 
     private val foods =
-        FoodManager.createMuiltpleFood(context, gameLevel.enemyCount, FOOD_RESERVOIR_SIZE)
+        FoodManager.createMuiltpleFood(context, gameLevel.enemyCount, gameLevel.foodReservoirSize)
 
     val badFood = FoodManager.loadBadFood(context, BAD_FOOD_SIZE)
 
     private var score = 0
 
     private val scorePaint = Paint()
+
+    private lateinit var currentStage: GameStage
 
     override fun update() {
         player.update()
@@ -56,6 +59,13 @@ class GameScene(context: Context, val soundManager: SoundManager) :
         scorePaint.color = Color.GREEN
         scorePaint.typeface = FontManager.getTypeForFont(context, FontManager.Font.SPACE_QUEST_XJ4O)
         scorePaint.textSize = FontManager.FontSize.BIG
+
+        GlobalScope.launch {
+            currentStage = DI.provideGameStageDao().getAllSavedStages().firstOrNull() ?: GameStage(
+                1,
+                context.resources.getString(R.string.stage_one)
+            )
+        }
     }
 
     override fun display(canvas: Canvas) {

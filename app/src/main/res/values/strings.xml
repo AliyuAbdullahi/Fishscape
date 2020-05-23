@@ -19,4 +19,11 @@
     <string name="main_menu">"Main Menu"</string>
     <string name="quit_game_confirm_text">Do you want to quit game?</string>
     <string name="empty_text">you don\'t have any score yet,\nget in the game\nand win for some scores</string>
+
+    <!-- stage names -->
+    <string name="stage_one">Hunger for survival</string>
+    <string name="stage_two">Argony of reality</string>
+    <string name="stage_three">Embracing the odds</string>
+    <string name="stage_four">Identifying the true path</string>
+    <string name="stage_five">Becoming the unsurmountable</string>
 </resources>
