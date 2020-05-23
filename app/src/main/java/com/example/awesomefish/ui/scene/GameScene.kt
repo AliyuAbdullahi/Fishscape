@@ -82,7 +82,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
                 context.resources.getString(R.string.stage_one)
             )
 
-            gameLevel = currentStage.associatedLevel()
+            gameLevel = currentStage.toLevel()
 
             foods =
                 FoodManager.createMuiltpleFood(
