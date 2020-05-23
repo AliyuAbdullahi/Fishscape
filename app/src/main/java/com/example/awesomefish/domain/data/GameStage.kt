@@ -5,3 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 class GameStage(@PrimaryKey val levelId: Int = 0, val stageName: String = "")
+
+
+fun GameStage.associatedLevel(): GameLevel =
+    levels().find { it.id == levelId } ?: GameLevel.LevelOne()

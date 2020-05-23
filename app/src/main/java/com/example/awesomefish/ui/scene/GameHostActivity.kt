@@ -69,7 +69,7 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
         super.onResume()
 
         GlobalScope.launch {
-            GameState.running = gameStatusDao.getGameStatus().first().paused.not()
+            GameState.running = gameStatusDao.getGameStatus().firstOrNull()?.paused ?: false
         }
 
         soundManager.resume()

@@ -1,10 +1,11 @@
 package com.example.awesomefish.domain.entities
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import com.example.awesomefish.shared.foodRadius
+import com.example.awesomefish.R
 import com.example.awesomefish.shared.rand
 
 const val MIN_Y = 200
@@ -12,7 +13,7 @@ const val FOOD_RADIUS = 30F
 const val POISONOUS_FOOD_SIZE = 80F
 
 class Food(
-    context: Context,
+    val foodContext: Context,
     val type: Type,
     var foodX: Float,
     var foodY: Float,
@@ -20,12 +21,16 @@ class Food(
     var foodWidth: Float = 0F,
     var foodHeight: Float = 0F
 ) :
-    Entity(context, foodX, foodY, 0F, 0F, foodWidth, foodHeight) {
+    Entity(foodContext, foodX, foodY, 0F, 0F, foodWidth, foodHeight) {
     private val paint = Paint()
 
     private var prevY = foodY
 
-    private val foodRadius = foodRadius()
+    private val foodRadius: Int
+        get() {
+            val bitmap = BitmapFactory.decodeResource(foodContext.resources, imageResource())
+            return bitmap.width
+        }
 
     init {
         foodWidth = foodRadius.toFloat()
@@ -58,13 +63,17 @@ class Food(
     }
 
     override fun draw(canvas: Canvas) {
-        canvas.drawCircle(foodX, foodY, foodRadius.toFloat(), paint)
+//        canvas.drawCircle(foodX, foodY, foodRadius.toFloat(), paint)
+        val foodBitmap = BitmapFactory.decodeResource(foodContext.resources, imageResource())
+        canvas.drawBitmap(foodBitmap, foodX, foodY, null)
     }
 
-    override fun imageResource(): Int? {
-        // do nothing
-        return null
-    }
+    override fun imageResource(): Int =
+        if (type == Type.EDIBLE) {
+            R.drawable.good_food
+        } else {
+            R.drawable.bad_food
+        }
 
     enum class Type {
         EDIBLE, POISON
