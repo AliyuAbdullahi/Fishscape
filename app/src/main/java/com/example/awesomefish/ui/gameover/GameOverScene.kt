@@ -192,5 +192,6 @@ class GameOverScene(context: Context) : AbstractScene(context) {
 
     companion object {
         private const val SCORE_NAME = "SCORE: "
+
     }
 }

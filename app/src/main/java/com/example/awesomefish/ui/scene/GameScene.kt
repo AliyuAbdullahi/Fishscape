@@ -8,9 +8,9 @@ import android.graphics.Rect
 import android.view.MotionEvent
 import com.example.awesomefish.R
 import com.example.awesomefish.di.DI
-import com.example.awesomefish.domain.data.GameLevel
-import com.example.awesomefish.domain.data.Score
+import com.example.awesomefish.domain.data.*
 import com.example.awesomefish.domain.entities.Food
+import com.example.awesomefish.domain.entities.MIN_PLAYER_Y
 import com.example.awesomefish.domain.entities.Player
 import com.example.awesomefish.domain.scenebase.Scene
 import com.example.awesomefish.shared.*
@@ -28,16 +28,35 @@ class GameScene(context: Context, val soundManager: SoundManager) :
 
     private var player: Player = Player(context, 0F, 0F, 0F, 0F)
 
-    private val foods =
-        FoodManager.createMuiltpleFood(context, gameLevel.enemyCount, FOOD_RESERVOIR_SIZE)
+    private var foods =
+        FoodManager.createMuiltpleFood(context, gameLevel.enemyCount, gameLevel.foodReservoirSize)
 
-    val badFood = FoodManager.loadBadFood(context, BAD_FOOD_SIZE)
+    var badFood = FoodManager.loadBadFood(context, gameLevel.enemyCount)
 
     private var score = 0
 
     private val scorePaint = Paint()
 
+    private lateinit var currentStage: GameStage
+
     override fun update() {
+
+        if (FoodManager.hasFood().not()) {
+            //migrate to next stage
+            if (gameLevel.canGoNext()) {
+                gameLevel = gameLevel.next()
+                foods =
+                    FoodManager.createMuiltpleFood(
+                        context,
+                        gameLevel.enemyCount,
+                        gameLevel.foodReservoirSize
+                    )
+                badFood = FoodManager.loadBadFood(context, gameLevel.enemyCount)
+
+                player.playerY = MIN_PLAYER_Y
+            }
+        }
+
         player.update()
 
         if (FoodManager.hasFood()) {
@@ -56,20 +75,30 @@ class GameScene(context: Context, val soundManager: SoundManager) :
         scorePaint.color = Color.GREEN
         scorePaint.typeface = FontManager.getTypeForFont(context, FontManager.Font.SPACE_QUEST_XJ4O)
         scorePaint.textSize = FontManager.FontSize.BIG
+
+        GlobalScope.launch {
+            currentStage = DI.provideGameStageDao().getAllSavedStages().firstOrNull() ?: GameStage(
+                1,
+                context.resources.getString(R.string.stage_one)
+            )
+
+            gameLevel = currentStage.toLevel()
+
+            foods =
+                FoodManager.createMuiltpleFood(
+                    context,
+                    gameLevel.enemyCount,
+                    gameLevel.foodReservoirSize
+                )
+            badFood = FoodManager.loadBadFood(context, gameLevel.enemyCount)
+        }
     }
 
     override fun display(canvas: Canvas) {
         super.display(canvas)
         when {
             player.isDead() -> {
-                ScoreManager.setTheScore(Score(score, System.currentTimeMillis()))
-                saveScore(score)
-                FoodManager.clearAll()
-                GameLauncher.addScene(
-                    GameOverScene(
-                        context
-                    )
-                )
+                showGameOver()
             }
             else -> {
                 setFoodPosition(canvas)
@@ -80,6 +109,19 @@ class GameScene(context: Context, val soundManager: SoundManager) :
                 drawLife(canvas)
             }
         }
+    }
+
+    private fun showGameOver() {
+        ScoreManager.setTheScore(Score(score, System.currentTimeMillis()))
+        saveScore(score)
+        FoodManager.clearAll()
+        soundManager.stopBackgroundSound()
+        soundManager.playLongTrack(SoundManager.BackgroundSound.GAME_OVER)
+        GameLauncher.addScene(
+            GameOverScene(
+                context
+            )
+        )
     }
 
     private fun saveScore(score: Int) {
@@ -173,7 +215,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
     }
 
     override fun backgroundImage(): Int? {
-        return R.drawable.background
+        return gameLevel.background
     }
 
     override fun onTouch(motionEvent: MotionEvent): Boolean {
@@ -203,7 +245,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
         Rect(
             food.foodX.toInt(),
             food.foodY.toInt(),
-            (food.foodX + food.foodY).toInt(),
+            (food.foodX + food.foodWidth).toInt(),
             (food.foodY + food.foodHeight).toInt()
         )
     )
@@ -211,6 +253,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
     override fun onDestroy() {
         soundManager.unload(SoundManager.MENU_1)
         SoundManager.clear()
+        //save_current stage
     }
 
     companion object {

@@ -30,11 +30,9 @@ class GameLauncher(context: Context, soundManager: SoundManager) : View(context)
         return SceneManager.get().onTouch(event)
     }
 
-    fun onPause() {
-    }
+    fun onPause() {}
 
-    fun onResume() {
-    }
+    fun onResume() {}
 
     fun onDestroy() {
         SceneManager.get().onDestroy()

@@ -165,9 +165,10 @@ class SoundManager private constructor(val context: Context) {
     enum class BackgroundSound(@RawRes val resId: Int) {
         MENU_SCREEN_ONE(R.raw.menu_screen_1),
         WELCOME_SCREEN(R.raw.welcome_screen),
-        WELCOME_SCREEN_2(R.raw.welcome_screen_2),
+        WELCOME_SCREEN_2(R.raw.game_over),
         MENU_SCREEN(R.raw.menu_screen_2),
         HOME_SOUND(R.raw.home_sound),
+        GAME_OVER(R.raw.game_over)
     }
 
     enum class ShortSound(@RawRes val resId: Int) {
