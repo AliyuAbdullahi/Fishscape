@@ -45,6 +45,8 @@ class GameScene(context: Context, val soundManager: SoundManager) :
             //migrate to next stage
             if (gameLevel.canGoNext()) {
                 gameLevel = gameLevel.next()
+                soundManager.stopBackgroundSound()
+                soundManager.playLongTrack(gameLevel.levelSound)
                 foods =
                     FoodManager.createMuiltpleFood(
                         context,

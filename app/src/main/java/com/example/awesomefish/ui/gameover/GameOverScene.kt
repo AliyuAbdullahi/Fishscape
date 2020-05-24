@@ -58,18 +58,21 @@ class GameOverScene(context: Context) : AbstractScene(context) {
     init {
         onAttach()
         gameOverPaint.apply {
+            isAntiAlias = true
             typeface = FontManager.getTypeForFont(context, FontManager.Font.SPACE_QUEST_XJ4O)
             textSize = FontManager.FontSize.LARGE
             color = Color.RED
         }
 
         newGamePaint.apply {
+            isAntiAlias = true
             typeface = FontManager.getTypeForFont(context, FontManager.Font.SPACE_QUEST_XJ4O)
             textSize = FontManager.FontSize.BIG
             color = Color.YELLOW
         }
 
         scorePaint.apply {
+            isAntiAlias = true
             typeface = FontManager.getTypeForFont(context, FontManager.Font.SPACE_QUEST_XJ4O)
             textSize = FontManager.FontSize.LARGE
             color = Color.BLUE
@@ -153,7 +156,6 @@ class GameOverScene(context: Context) : AbstractScene(context) {
                     yCoord.toInt()
                 )
                 -> {
-                    Log.d("EVENT", "NEW GAME CLICKED")
                     gameOverClickedListener.newGameClicked()
                     return true
                 }
@@ -173,7 +175,6 @@ class GameOverScene(context: Context) : AbstractScene(context) {
                     yCoord.toInt()
                 )
                 -> {
-                    Log.d("EVENT", "QUIT GAME CLICKED")
                     gameOverClickedListener.quitGameClicked()
                     return true
                 }
@@ -192,6 +193,5 @@ class GameOverScene(context: Context) : AbstractScene(context) {
 
     companion object {
         private const val SCORE_NAME = "SCORE: "
-
     }
 }

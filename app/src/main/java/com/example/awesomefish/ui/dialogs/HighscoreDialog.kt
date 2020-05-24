@@ -97,7 +97,7 @@ class HighscoreDialog : DialogFragment() {
         }
 
         fun show(fragmentManager: FragmentManager) {
-            HighscoreDialog.instance().show(fragmentManager, HIGH_SCORE_TAG)
+            instance().show(fragmentManager, HIGH_SCORE_TAG)
         }
 
         fun hide(fragmentManager: FragmentManager) {
