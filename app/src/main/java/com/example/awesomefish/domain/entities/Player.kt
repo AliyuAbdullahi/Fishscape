@@ -43,7 +43,6 @@ class Player(
             if (lifeCount <= 0) {
                 return
             }
-            printDebug()
             playerY = playerY + speed
 
             if (playerY >= (maxY - MAX_PLAYER_Y_OFFSET)) {
@@ -97,7 +96,6 @@ class Player(
             playerImage = BitmapFactory.decodeResource(context.resources, R.drawable.fish2)
             if (screenClicked) {
                 canvas.drawBitmap(playerImage, playerX, playerY, null)
-                Console.warn("Loaded... $playerX , $playerY ")
                 screenClicked = false
             } else {
                 imageResource()?.let { image ->
@@ -122,8 +120,6 @@ class Player(
     }
 
     override fun imageResource(): Int? = R.drawable.fish1
-
-    fun printDebug() {}
 
     companion object {
         private const val PLAYER_SPEED = 15

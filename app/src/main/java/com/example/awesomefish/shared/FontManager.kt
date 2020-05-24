@@ -31,11 +31,11 @@ object FontManager {
     }
 
     object FontBaseSize {
-        const val SMALL = 12
-        const val MEDIUM = 17
-        const val BIG = 22
-        const val LARGE = 33
-        const val VERY_LARGE = 40
+        const val SMALL = 8
+        const val MEDIUM = 12
+        const val BIG = 18
+        const val LARGE = 24
+        const val VERY_LARGE = 32
     }
 
     object FontMultipyer {

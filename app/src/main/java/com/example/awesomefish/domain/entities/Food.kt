@@ -22,7 +22,6 @@ class Food(
     var foodHeight: Float = 0F
 ) :
     Entity(foodContext, foodX, foodY, 0F, 0F, foodWidth, foodHeight) {
-    private val paint = Paint()
 
     private var prevY = foodY
 
@@ -35,12 +34,6 @@ class Food(
     init {
         foodWidth = foodRadius.toFloat()
         foodHeight = foodRadius.toFloat()
-        if (type == Type.EDIBLE) {
-            paint.color = Color.YELLOW
-        } else {
-            paint.color = Color.RED
-        }
-        paint.isAntiAlias = true
     }
 
     var speed = if (type == Type.EDIBLE) 16 else 18
@@ -63,7 +56,6 @@ class Food(
     }
 
     override fun draw(canvas: Canvas) {
-//        canvas.drawCircle(foodX, foodY, foodRadius.toFloat(), paint)
         val foodBitmap = BitmapFactory.decodeResource(foodContext.resources, imageResource())
         canvas.drawBitmap(foodBitmap, foodX, foodY, null)
     }

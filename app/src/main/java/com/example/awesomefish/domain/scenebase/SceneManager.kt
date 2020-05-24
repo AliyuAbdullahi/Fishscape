@@ -3,13 +3,13 @@ package com.example.awesomefish.domain.scenebase
 import java.util.*
 
 object SceneManager {
-    val scenes = stackOf<Scene>()
+    private val scenes = stackOf<Scene>()
     
     fun addScene(scene: Scene) {
         scenes.push(scene)
     }
     
-    fun get() = scenes.peek()
+    fun get(): Scene = scenes.peek()
     
     fun clear() = scenes.clear()
     

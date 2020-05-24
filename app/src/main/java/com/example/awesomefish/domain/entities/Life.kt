@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.util.Log
 import com.example.awesomefish.R
+import com.example.awesomefish.shared.Console
 
 class Life(
     private val lifeContext: Context, private var lifeX: Float, private var lifeY: Float,
@@ -32,7 +33,7 @@ class Life(
     override fun imageResource(): Int? = R.drawable.hearts
 
     fun printDebug() {
-        Log.d("LIFE", "x: $lifeX, y: $lifeY")
+        Console.log("LIFE", "x: $lifeX, y: $lifeY")
     }
 
     override fun toString(): String {
