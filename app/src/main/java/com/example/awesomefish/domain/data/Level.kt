@@ -7,11 +7,16 @@ sealed class GameLevel(
     val id: Int,
     val enemyCount: Int,
     val foodReservoirSize: Int,
-    val background: Int = R.drawable.background,
+    val background: Int = R.drawable.level1,
     val levelTitle: String = "",
     val levelSound: SoundManager.BackgroundSound = SoundManager.BackgroundSound.WELCOME_SCREEN
 ) {
-    class LevelOne : GameLevel(1, 4, 12, R.drawable.background)
+    class LevelOne :
+        GameLevel(
+            1,
+            4,
+            12,
+            R.drawable.level1)
     class LevelTwo :
         GameLevel(
             2,
