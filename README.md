@@ -1,4 +1,4 @@
-## FishScape\s\s
+## FishScape
 
 <br>
 Fishscape is a side scrolling 2D retro style graphics game. The objective is to direct the fish by tapping on the screen.
