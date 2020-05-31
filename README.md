@@ -14,9 +14,9 @@ There are enemies too which can take away the fish'slife. If a player touches th
   * [data<a name="data"></a>](#data)
   * [entity<a name="entity"></a>](#entity)
   * [repository<a name="repository"></a>](#repository)
-  * [Room<a name="room"></a>](#room)
-  * [SceneBase](#scenebase)
-* [Shared](#shared)
+  * [room<a name="room"></a>](#room)
+  * [SceneBase<a name="scenbase"></a>](#scenebase)
+* [Shared<a name="shared"></a>](#shared)
   * [AnimationManager](#animationmanager)
   * [Console](#console)
   * [Extensions](#extenstions)
@@ -57,7 +57,15 @@ The <i>entity</i> module contains game entities such as `Player`, `Food`...
 The `repository` module contains the game Repository. It performs business<br>
 logic for processing data from both local and remote sources.
 
-##### Room<a name="room"></a>
+##### room<a name="room"></a>
 The room package manages all room database contents withing `FishScape`.
+
+##### SceneBase<a name="scenbase"></a>
+The ScenBase provide abstract base class for Game Scenes
+
+### Shared<a name="shared"></a>
+All shared components are within shared module.
+
+
 
 
