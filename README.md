@@ -17,8 +17,8 @@ There are enemies too which can take away the fish'slife. If a player touches th
   * [room<a name="room"></a>](#room)
   * [SceneBase<a name="scenbase"></a>](#scenebase)
 * [Shared<a name="shared"></a>](#shared)
-  * [AnimationManager](#animationmanager)
-  * [Console](#console)
+  * [AnimationManager<a name="animationmanager"></a>](#animationmanager)
+  * [Console<a name="console"></a>](#console)
   * [Extensions](#extenstions)
   * [FontManager](#fontmanager)
   * [FoodManager](#foodmanager)
@@ -65,6 +65,16 @@ The ScenBase provide abstract base class for Game Scenes
 
 ### Shared<a name="shared"></a>
 All shared components are within shared module.
+
+#### AnimationManager<a name="animationmanager"></a>
+AnimationManager provide UI animation
+
+#### Console<a name="console"></a>
+Console provide colourful interface for logging items on console
+
+#### Extensions<a name="extensions"></a>
+Extensions provide interface for extending class functions that was not <br>
+available within the class definition.
 
 
 
