@@ -6,7 +6,9 @@ by tapping on the screen.There are different types of food which have different 
 There are enemies too which can take away the fish'slife. If a player touches the enemy, they lose.
 
 <br>
-Open [Wiki](https://github.com/AliyuAbdullahi/Fishscape/wiki) for details on architecture
+
+Open
+[Wiki](https://github.com/AliyuAbdullahi/Fishscape/wiki) for details on architecture
 
 
 
