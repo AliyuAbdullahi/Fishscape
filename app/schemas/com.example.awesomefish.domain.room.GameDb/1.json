@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d21b3d13be704edccac1c5483a73b541",
+    "identityHash": "141603754ae1259a179416eee942e86e",
     "entities": [
       {
         "tableName": "Score",
@@ -32,7 +32,7 @@
       },
       {
         "tableName": "GameStatus",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `paused` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `running` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -41,8 +41,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "paused",
-            "columnName": "paused",
+            "fieldPath": "running",
+            "columnName": "running",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -86,7 +86,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd21b3d13be704edccac1c5483a73b541')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '141603754ae1259a179416eee942e86e')"
     ]
   }
 }

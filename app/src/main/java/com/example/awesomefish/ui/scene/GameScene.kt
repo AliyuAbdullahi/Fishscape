@@ -45,6 +45,8 @@ class GameScene(context: Context, val soundManager: SoundManager) :
             //migrate to next stage
             if (gameLevel.canGoNext()) {
                 gameLevel = gameLevel.next()
+                soundManager.stopBackgroundSound()
+                soundManager.playLongTrack(gameLevel.levelSound)
                 foods =
                     FoodManager.createMuiltpleFood(
                         context,
@@ -82,7 +84,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
                 context.resources.getString(R.string.stage_one)
             )
 
-            gameLevel = currentStage.associatedLevel()
+            gameLevel = currentStage.toLevel()
 
             foods =
                 FoodManager.createMuiltpleFood(
@@ -98,14 +100,7 @@ class GameScene(context: Context, val soundManager: SoundManager) :
         super.display(canvas)
         when {
             player.isDead() -> {
-                ScoreManager.setTheScore(Score(score, System.currentTimeMillis()))
-                saveScore(score)
-                FoodManager.clearAll()
-                GameLauncher.addScene(
-                    GameOverScene(
-                        context
-                    )
-                )
+                showGameOver()
             }
             else -> {
                 setFoodPosition(canvas)
@@ -116,6 +111,19 @@ class GameScene(context: Context, val soundManager: SoundManager) :
                 drawLife(canvas)
             }
         }
+    }
+
+    private fun showGameOver() {
+        ScoreManager.setTheScore(Score(score, System.currentTimeMillis()))
+        saveScore(score)
+        FoodManager.clearAll()
+        soundManager.stopBackgroundSound()
+        soundManager.playLongTrack(SoundManager.BackgroundSound.GAME_OVER)
+        GameLauncher.addScene(
+            GameOverScene(
+                context
+            )
+        )
     }
 
     private fun saveScore(score: Int) {

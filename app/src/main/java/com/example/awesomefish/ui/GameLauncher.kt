@@ -34,8 +34,9 @@ class GameLauncher(context: Context, soundManager: SoundManager) : View(context)
 
     }
 
-    fun onResume() {
-    }
+    fun onPause() {}
+
+    fun onResume() {}
 
     fun onDestroy() {
         SceneManager.get().onDestroy()

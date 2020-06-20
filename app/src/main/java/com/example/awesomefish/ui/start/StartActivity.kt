@@ -117,6 +117,8 @@ class StartActivity : AppCompatActivity() {
     }
 
     private fun setUpView() {
+        //Still a long shot, the goal of this is to have the ability to resume play whenever
+        //a player leaves the game by accident
         resumeGame.visibility = if (LocalStorageManager.gameInProgress) View.VISIBLE else View.GONE
         startGame.text =
             if (LocalStorageManager.gameInProgress) getString(R.string.resume_game) else getString(

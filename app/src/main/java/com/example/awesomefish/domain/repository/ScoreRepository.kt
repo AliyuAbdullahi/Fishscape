@@ -34,7 +34,6 @@ class ScoreRepository : Repository<Score> {
 
     override suspend fun getAll(): List<Score> = scoreDao.getScores()
 
-
     override suspend fun <R> getOne(filter: R): Score? {
         return null
     }

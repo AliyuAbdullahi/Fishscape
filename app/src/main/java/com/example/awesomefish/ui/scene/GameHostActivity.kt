@@ -21,8 +21,10 @@ import com.example.awesomefish.ui.gameover.GameOverScene
 import com.example.awesomefish.ui.menu.PAUSE_MENU_TAG
 import com.example.awesomefish.ui.menu.PauseMenu
 import com.example.awesomefish.ui.start.StartActivity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -39,6 +41,7 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
         soundManager = SoundManager.instance(this)
         soundManager.stopBackgroundSound()
         gameUnPaused()
+
         Handler().postDelayed({
             soundManager.playLongTrack(SoundManager.BackgroundSound.WELCOME_SCREEN)
         }, 100)
@@ -64,25 +67,36 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     override fun onPause() {
         super.onPause()
         soundManager.pauseBackgroundSound()
+        saveGamePaused()
     }
 
     override fun onResume() {
         super.onResume()
+        resumeGame()
+    }
 
+    private fun resumeGame() {
         GlobalScope.launch {
-            GameState.running = gameStatusDao.getGameStatus().firstOrNull()?.paused ?: true
+            if (GameState.dialogVisible) {
+                GameState.running = gameStatusDao.getGameStatus().firstOrNull()?.running ?: true
+            } else {
+                GameState.running = true
+            }
+            withContext(Dispatchers.Main) {
+                soundManager.resume()
+                launcher.onResume()
+            }
         }
-
-        soundManager.resume()
-        launcher.onResume()
     }
 
     private fun showMenuDialog() {
+        GameState.dialogVisible = true
         soundManager.playShortSound(SoundManager.ShortSound.REVEAL_TWO, SoundManager.Loop.DONT_LOOP)
         PauseMenu.show(supportFragmentManager)
     }
 
     private fun hideMenuDialog() {
+        GameState.dialogVisible = false
         if (supportFragmentManager.findFragmentByTag(PAUSE_MENU_TAG) != null) {
             soundManager.playShortSound(
                 SoundManager.ShortSound.REVEAL_TWO,
@@ -107,18 +121,19 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
 
     private fun saveGamePaused() {
         GlobalScope.launch {
-            gameStatusDao.saveGameStatus(GameStatus(1, true))
+            gameStatusDao.saveGameStatus(GameStatus(1, false))
         }
     }
 
     private fun gameUnPaused() {
         GlobalScope.launch {
-            gameStatusDao.saveGameStatus(GameStatus(1, false))
+            gameStatusDao.saveGameStatus(GameStatus(1, true))
         }
     }
 
     override fun resumeClicked() {
         hideMenuDialog()
+        gameUnPaused()
         GameState.running = true
     }
 
@@ -154,6 +169,8 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
 
     override fun newGameClicked() {
         FoodManager.clearAll()
+        soundManager.stopBackgroundSound()
+        soundManager.playLongTrack(SoundManager.BackgroundSound.WELCOME_SCREEN)
         GameLauncher.addScene(GameScene(this, soundManager))
     }
 

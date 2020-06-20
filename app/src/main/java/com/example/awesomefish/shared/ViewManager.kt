@@ -31,7 +31,7 @@ fun getDeviceWidth(size: Int): ScreenSize {
         ScreenSize.VeryLarge
     )
 
-    return all.first { it.width >= size }
+    return all.reversed().first { it.width >= size }
 }
 
 typealias WidthHeightPair<A, B> = Pair<A, B>
