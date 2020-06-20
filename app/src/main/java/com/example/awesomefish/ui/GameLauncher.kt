@@ -31,6 +31,7 @@ class GameLauncher(context: Context, soundManager: SoundManager) : View(context)
     }
 
     fun onPause() {
+
     }
 
     fun onResume() {

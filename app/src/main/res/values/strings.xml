@@ -26,4 +26,7 @@
     <string name="stage_three">Embracing the odds</string>
     <string name="stage_four">Identifying the true path</string>
     <string name="stage_five">Becoming the unsurmountable</string>
+    <string name="music_text">Music:\nEric Matyas\nwww.soundimage.org</string>
+    <string name="background_text">Background:\nwww.unsplash.com</string>
+    <string name="copyright_2020">© 2020</string>
 </resources>

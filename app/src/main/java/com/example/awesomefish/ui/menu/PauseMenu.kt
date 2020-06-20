@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.example.awesomefish.R
@@ -50,7 +51,8 @@ class PauseMenu : DialogFragment() {
 
         settings.setOnClickListener { pauseMenuItemClickedListener.settingsClicked() }
 
-        aboutUs.setOnClickListener { pauseMenuItemClickedListener.aboutClicked() }
+        aboutUs.setOnClickListener { pauseMenuItemClickedListener.aboutClicked()
+        }
 
         quit.setOnClickListener { pauseMenuItemClickedListener.quitClicked() }
     }
