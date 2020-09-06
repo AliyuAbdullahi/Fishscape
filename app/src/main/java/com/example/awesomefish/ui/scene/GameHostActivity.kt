@@ -15,6 +15,7 @@ import com.example.awesomefish.di.DI
 import com.example.awesomefish.domain.data.GameStatus
 import com.example.awesomefish.shared.FoodManager
 import com.example.awesomefish.shared.SoundManager
+import com.example.awesomefish.ui.AboutPage
 import com.example.awesomefish.ui.GameLauncher
 import com.example.awesomefish.ui.gameover.GameOverScene
 import com.example.awesomefish.ui.menu.PAUSE_MENU_TAG
