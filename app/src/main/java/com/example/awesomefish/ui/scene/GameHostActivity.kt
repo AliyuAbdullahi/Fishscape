@@ -17,6 +17,7 @@ import com.example.awesomefish.shared.FoodManager
 import com.example.awesomefish.shared.SoundManager
 import com.example.awesomefish.ui.AboutPage
 import com.example.awesomefish.ui.GameLauncher
+import com.example.awesomefish.ui.dialogs.PauseMenuDialog
 import com.example.awesomefish.ui.gameover.GameOverScene
 import com.example.awesomefish.ui.menu.PAUSE_MENU_TAG
 import com.example.awesomefish.ui.menu.PauseMenu
@@ -28,7 +29,7 @@ import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.system.exitProcess
 
-class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedListener,
+class GameHostActivity : AppCompatActivity(), PauseMenuDialog.PauseMenuDialogItemClickedListener,
     GameOverScene.GameOverClickListener {
     private lateinit var launcher: GameLauncher
     private lateinit var soundManager: SoundManager
@@ -92,7 +93,7 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
     private fun showMenuDialog() {
         GameState.dialogVisible = true
         soundManager.playShortSound(SoundManager.ShortSound.REVEAL_TWO, SoundManager.Loop.DONT_LOOP)
-        PauseMenu.show(supportFragmentManager)
+        PauseMenuDialog.show(supportFragmentManager)
     }
 
     private fun hideMenuDialog() {
@@ -102,7 +103,7 @@ class GameHostActivity : AppCompatActivity(), PauseMenu.PauseMenuItemClickedList
                 SoundManager.ShortSound.REVEAL_TWO,
                 SoundManager.Loop.DONT_LOOP
             )
-            PauseMenu.hide(supportFragmentManager)
+            PauseMenuDialog.hide(supportFragmentManager)
         }
     }
 
