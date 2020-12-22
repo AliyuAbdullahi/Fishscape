@@ -22,8 +22,7 @@ private const val HIGH_SCORE_TAG = "highScore"
 class HighScoreBottomSheet : RoundedBottomSheetDialogFragment() {
 
     private val repository = DI.provideScoreRepository()
-    lateinit var emptyText: TextView
-
+    private lateinit var emptyText: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,9 +37,7 @@ class HighScoreBottomSheet : RoundedBottomSheetDialogFragment() {
         emptyText = view.findViewById(R.id.empty_text)
         GlobalScope.launch {
             withContext(Dispatchers.Main) {
-                val scores =
-                    repository.getAll().sortedBy { it.scoreValue }
-                        .reversed().toMutableList()
+                val scores = repository.getAll().sortedBy { it.scoreValue }.reversed().toMutableList()
                 if (scores.isEmpty()) {
                     showEmptyState()
                 } else {

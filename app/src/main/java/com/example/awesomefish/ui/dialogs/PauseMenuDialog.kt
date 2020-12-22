@@ -17,13 +17,12 @@ import kotlinx.android.synthetic.main.pause_menu.*
 
 class PauseMenuDialog : RoundedBottomSheetDialogFragment() {
 
-    lateinit var resume: TextView
-    lateinit var settings: TextView
-    lateinit var about: TextView
-    lateinit var quitgame: TextView
+    private lateinit var resume: TextView
+    private lateinit var settings: TextView
+    private lateinit var about: TextView
+    private lateinit var quitgame: TextView
 
     private lateinit var pauseMenuItemClickedListener: PauseMenuDialogItemClickedListener
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -108,7 +107,6 @@ class PauseMenuDialog : RoundedBottomSheetDialogFragment() {
             (fragmentManager.findFragmentByTag(PAUSE_MENU_TAG) as PauseMenuDialog).dismiss()
         }
     }
-
 
     interface PauseMenuDialogItemClickedListener {
         fun resumeClicked()
