@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.awesomefish.R
 import com.example.awesomefish.domain.data.LocalStorageManager
 import com.example.awesomefish.shared.*
+import com.example.awesomefish.ui.dialogs.HighScoreBottomSheet
 import com.example.awesomefish.ui.dialogs.HighscoreDialog
 import com.example.awesomefish.ui.scene.GameHostActivity
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -62,14 +63,15 @@ class StartActivity : AppCompatActivity() {
 
     private fun setUpClickListener() {
         highScore.setOnClickListener {
-            HighscoreDialog.show(supportFragmentManager)
+            //HighscoreDialog.show(supportFragmentManager)
+            HighScoreBottomSheet.show(supportFragmentManager)
         }
     }
 
     private fun setUpFont() {
-        splashTitle.setTypeface(FontManager.getTypeForFont(this, FontManager.Font.SPACE_QUEST_XJ4O))
-        startGame.setTypeface(FontManager.getTypeForFont(this, FontManager.Font.SQUIRK))
-        highScore.setTypeface(FontManager.getTypeForFont(this, FontManager.Font.SQUIRK))
+        splashTitle.typeface = FontManager.getTypeForFont(this, FontManager.Font.SPACE_QUEST_XJ4O)
+        startGame.typeface = FontManager.getTypeForFont(this, FontManager.Font.SQUIRK)
+        highScore.typeface = FontManager.getTypeForFont(this, FontManager.Font.SQUIRK)
     }
 
     private fun applyAnimationOnView() {
